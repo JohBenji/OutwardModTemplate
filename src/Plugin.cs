@@ -302,6 +302,7 @@ namespace BossRush
 
         public void giveReward(Character character)
         {
+            // Something
             /*
             // XML Item Rewards
             if (bossRushRewardDatas != null) 
