@@ -3,6 +3,7 @@ using NodeCanvas.Tasks.Actions;
 using SideLoader.SaveData;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.TextCore;
 
 
 namespace BossRush
@@ -74,8 +75,13 @@ namespace BossRush
                     if (worldHost != null) 
                     {
                         BossRushPlugin.Instance.BossRushManager.RecordVictory(worldHost.UID, __instance.UID);
-
-                        BossRushPlugin.Instance.giveReward(worldHost);
+                        if (BossRushPlugin.Instance.BossRushManager.HasDropDataFor(__instance.UID))
+                        {
+                            foreach (var table in BossRushPlugin.Instance.BossRushManager.GetDropDataFor(__instance.UID))
+                            {
+                                table.RollAndGrantDrops(worldHost);
+                            }
+                        }
                     }               
                 }
             }        

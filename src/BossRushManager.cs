@@ -42,38 +42,39 @@ namespace BossRush
 
                     foreach (var item in filePaths)
                     {
-                        try
+                        BossDropData bossDropTable = DeserializeFromXML<BossDropData>(item);
+
+                        //if its not null it deserialized correctly (is the correct type, exists etc)
+                        if (bossDropTable != null)
                         {
 
-                            BossDropData bossDropTable = DeserializeFromXML<BossDropData>(item);
-
-                            //if its not null it deserialized correctly (is the correct type, exists etc)
-                            if (bossDropTable != null)
+                            BossRush.BossRushPlugin.Log.LogMessage($"Found drop table for UID : {bossDropTable.targetCharacterUID} Table count : {bossDropTable.DropTables.Count}");
+                            //does our dictionary already contain this character UID?
+                            if (BossDropTables.ContainsKey(bossDropTable.targetCharacterUID))
                             {
-
-                                BossRush.BossRushPlugin.Log.LogMessage($"Found {bossDropTable}");
-                                //does our dictionary already contain this character UID?
-                                if (BossDropTables.ContainsKey(bossDropTable.targetCharacterUID))
-                                {
-                                    //if so update the list of drop data
-                                    BossDropTables[bossDropTable.targetCharacterUID].Add(bossDropTable);
-                                }
-                                else
-                                {
-                                    //add new an entry, initialise the list aswell.
-                                    List<BossDropData> newList = new List<BossDropData>();
-                                    newList.Add(bossDropTable);
-                                    BossDropTables.Add(bossDropTable.targetCharacterUID, newList);
-                                }
-
+                                //if so update the list of drop data
+                                BossDropTables[bossDropTable.targetCharacterUID].Add(bossDropTable);
+                            }
+                            else
+                            {
+                                //add new an entry, initialise the list aswell.
+                                List<BossDropData> newList = new List<BossDropData>();
+                                newList.Add(bossDropTable);
+                                BossDropTables.Add(bossDropTable.targetCharacterUID, newList);
                             }
 
+                        }
 
-                        }
-                        catch (Exception ex)
-                        {
-                            BossRush.BossRushPlugin.Log.LogMessage(ex);
-                        }
+                        //try
+                        //{
+
+
+
+                        //}
+                        //catch (Exception ex)
+                        //{
+                        //    BossRush.BossRushPlugin.Log.LogMessage(ex);
+                        //}
 
                     }
                 }
@@ -95,6 +96,11 @@ namespace BossRush
 
                 if (defeatedBossData != null)
                 {
+                    if (defeatedBossData.DefeatedFoes == null)
+                    {
+                        defeatedBossData.DefeatedFoes = new List<string>();
+                    }
+
                     defeatedBossData.DefeatedFoes.Add(foeUID);
                 }
                
@@ -105,6 +111,9 @@ namespace BossRush
                 {
                     CharacterUID = playerUID,
                     DefeatedFoes = new List<string>()
+                    {
+                        foeUID
+                    }
                 });
             }
         }
@@ -155,7 +164,7 @@ namespace BossRush
 
         public T DeserializeFromXML<T>(string path)
         {
-            var serializer = new XmlSerializer(typeof(T), new Type[] { typeof(BossDropData), typeof(BossDropTable)  });
+            var serializer = new XmlSerializer(typeof(T), new Type[] { typeof(BossDropData), typeof(BossDropTable), typeof(DropItemData), typeof(WeightedDropItemData)});
             StreamReader reader = new StreamReader(path);
             T deserialized = (T)serializer.Deserialize(reader.BaseStream);
             reader.Close();

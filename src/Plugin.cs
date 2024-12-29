@@ -313,8 +313,11 @@ namespace BossRush
 
                     if (this.BossRushManager.HasDropDataFor(defeatedFoeUID))
                     {
+
+                        Log.LogMessage($"{defeatedFoeUID} has drop data.");
                         foreach (var table in this.BossRushManager.GetDropDataFor(defeatedFoeUID))
                         {
+                            Log.LogMessage($"Rolling {table.DropTables.Count} drop tables.");
                             table.RollAndGrantDrops(character);
                         }
                     }
