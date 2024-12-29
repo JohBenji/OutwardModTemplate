@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BossDropData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <targetCharacterUID>1jQVBcggjEuTM_SanrCgPQ</targetCharacterUID>
+    <DropTables>
+        <DropTable>
+            <MinRolls>1</MinRolls>
+            <MaxRolls>1</MaxRolls>
+            <GuaranteedDrops>
+                <DropItem>
+                    <ItemID>2020325</ItemID>
+                    <MinAmount>1</MinAmount>
+                    <MaxAmount>1</MaxAmount>
+                </DropItem>
+            </GuaranteedDrops>
+        </DropTable>
+    </DropTables>
+</BossDropData>
