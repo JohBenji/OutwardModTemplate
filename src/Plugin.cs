@@ -2,9 +2,7 @@
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -52,26 +50,25 @@ namespace BossRush
         // If you need settings, define them like so:
         public static ConfigEntry<bool> ExampleConfig;
 
+
+        //your plugin is already a singleton so you can put the manager/deserializer here.
+        public BossRushManager BossRushManager { get; private set; }
+
         public static BossRushPlugin Instance { get; private set; }
 
 
         // Awake is called when your plugin is created. Use this to set up your mod.
         internal void Awake()
         {
-            Log = this.Logger;
-            //Log.LogMessage($"Hello world from {NAME} {VERSION}!");
-
-            // Any config settings you define should be set up like this:
-            ConfigElements.Init(base.Config);
-
             Instance = this;
-            PortalManager portalManager = new PortalManager();
-            BossRushPlugin.portalManager = portalManager;
+            Log = this.Logger;
 
+            //create a new instance of the class calls the constructor which calls FindXMLDefinitions
+            BossRushManager = new BossRushManager();
+            portalManager = new PortalManager();
+
+            ConfigElements.Init(base.Config);
             SceneManager.sceneLoaded += SceneManager_sceneLoaded;
-            //CollectRewards rewards = new CollectRewards();
-
-            // Harmony is for patching methods. If you're not patching anything, you can comment-out or delete this line.
             new Harmony(GUID).PatchAll();       
 
             /*
@@ -302,26 +299,27 @@ namespace BossRush
 
         public void giveReward(Character character)
         {
-            // Something
-            /*
-            // XML Item Rewards
-            if (bossRushRewardDatas != null) 
+            Log.LogMessage($"Granting rewards to {character.Name}...");
+
+            if (this.BossRushManager != null  && this.BossRushManager.HasRecord(character.UID))
             {
-                for (int i = 0; i < bossRushRewardDatas.Count; i++)
+
+                List<string> list = this.BossRushManager.GetDefeatedFoesFor(character.UID);
+                Log.LogMessage($"{character.Name} has {list.Count} foes defeated.");
+
+                foreach (var defeatedFoeUID in list)
                 {
-                    BossRushRewardData data = bossRushRewardDatas[i];
-                    if (data != null) 
+                    Log.LogMessage($"{character.Name} has defeated {defeatedFoeUID}");
+
+                    if (this.BossRushManager.HasDropDataFor(defeatedFoeUID))
                     {
-                        List<string> UIDs = data.Strings;
-                        for (int j = 0; j < UIDs.Count; j++) 
+                        foreach (var table in this.BossRushManager.GetDropDataFor(defeatedFoeUID))
                         {
-                            character.Inventory.ReceiveItemReward();
+                            table.RollAndGrantDrops(character);
                         }
                     }
                 }
             }
-            */
-            character.Inventory.ReceiveItemReward(6200010, 1,false);
         }
 
         public static void delayTeleport(Character character) 
@@ -762,55 +760,4 @@ namespace BossRush
             }
         }
     }
-
-
-    public class PortalManager
-    {
-        private bool AreaSwitchInProgress = false;        
-        private AreaManager.AreaEnum targetArea = AreaEnum.Berg;
-        private Character targetCharacter;
-        private int spawnpointindex;
-
-        public void StartAreaSwitchAndSetPosition(Character Character, AreaManager.AreaEnum areaEnum, int SpawnPointIndex)
-        {
-            if (!CanStartAreaSwitch(areaEnum))
-            {
-                return;
-            }
-
-            spawnpointindex = SpawnPointIndex;
-            targetArea = areaEnum;
-            targetCharacter = Character;
-            StartAreaSwitch(Character, areaEnum, spawnpointindex);
-        }
-
-        public void StartAreaSwitch(Character Character, AreaManager.AreaEnum areaEnum, int spawnPointIndex, bool moveBag = true)
-        {
-            if (!CanStartAreaSwitch(areaEnum))
-            {
-                return;
-            }
-
-            BossRushPlugin.Log.LogMessage("Starting area switch teleport");
-
-            AreaSwitchInProgress = true;
-
-            Area ChosenArea = AreaManager.Instance.GetArea(areaEnum);
-
-            if (ChosenArea != null)
-            {
-                NetworkLevelLoader.Instance.RequestSwitchArea(ChosenArea.SceneName, spawnPointIndex, 1.5f, moveBag);
-                // Start Coroutine to check when area has been switched
-            }
-            else
-            {
-                BossRushPlugin.Log.LogError($"Failed to start Teleport to {areaEnum} Area could not be found");
-            }
-        }
-        private bool CanStartAreaSwitch(AreaEnum targetArea)
-        {
-            return !AreaSwitchInProgress && targetArea != AreaEnum.Nath_Test;
-        }
-    }
-   
 }

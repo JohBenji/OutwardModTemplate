@@ -1,18 +1,22 @@
-﻿using BepInEx;
-using NodeCanvas.BehaviourTrees;
-using SideLoader;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Serialization;
 
 namespace BossRush
 {
+    [Serializable]
+    public class DefeatedBossData
+    {
+        public string CharacterUID;
+        public List<string> DefeatedFoes;
+
+        public bool HasDeafeated(string CharacterUID)
+        {
+            return DefeatedFoes.Contains(CharacterUID);
+        }
+    }
+
+
+
     /*
     public class CollectRewards
     {
