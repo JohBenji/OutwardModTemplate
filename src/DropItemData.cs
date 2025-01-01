@@ -15,6 +15,5 @@ namespace BossRush
             if (MinAmount == MaxAmount) return MinAmount;
             return UnityEngine.Random.Range(MinAmount, MaxAmount + 1);
         }
-    }
-   
+    }   
 }

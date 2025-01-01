@@ -15,11 +15,9 @@ namespace BossRush
         public List<DropItemData> GuaranteedDrops;
         public List<WeightedDropItemData> WeightedDrops;
 
-
         public int GetRolls()
         {
             return UnityEngine.Random.Range(MinRolls, MaxRolls);  
         }
-    }
-   
+    }   
 }

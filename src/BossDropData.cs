@@ -6,7 +6,23 @@ using System.Xml.Serialization;
 namespace BossRush
 {
     [Serializable]
-    [XmlRoot("BossDropData")]
+    [XmlRoot("BossRushDropData")]
+    public class BossRushDropData
+    {
+        [XmlArray("SpecificChestLoot")]
+        [XmlArrayItem("ParticularChest")]
+        public List<ParticularBossDropTable> SpecificChestLoot;
+        [XmlArray("CommonChestLoot")]
+        [XmlArrayItem("DropTables")]
+        public List<BossDropTable> CommonChestLoot;
+        [XmlArray("BossRushCompletion")]
+        [XmlArrayItem("DropTables")]
+        public List<BossDropTable> BossRushCompletion;
+    }
+
+    /*
+    [Serializable]
+    [XmlRoot("BossRushDropData")]
     public class BossDropData
     {
         public string targetCharacterUID;
@@ -36,6 +52,6 @@ namespace BossRush
                 }
             }
         }
-    }
-   
+    }*/
+
 }

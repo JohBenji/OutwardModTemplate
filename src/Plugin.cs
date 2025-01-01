@@ -299,6 +299,10 @@ namespace BossRush
 
         public void giveReward(Character character)
         {
+            // Here should the reward be given upon completing the boss rush
+
+            // Previous Code:
+            /*
             Log.LogMessage($"Granting rewards to {character.Name}...");
 
             if (this.BossRushManager != null  && this.BossRushManager.HasRecord(character.UID))
@@ -323,6 +327,12 @@ namespace BossRush
                     }
                 }
             }
+            */
+        }
+
+        public void giveChestReward()
+        {
+            // Here should the reward be stored in the chest
         }
 
         public static void delayTeleport(Character character) 

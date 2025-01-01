@@ -16,13 +16,17 @@ namespace BossRush
 {
     public class BossRushManager
     {
-
-        private Dictionary<string, List<BossDropData>> BossDropTables = new Dictionary<string, List<BossDropData>>();
-
+        private BossRushDropData BossRushDropData = new BossRushDropData();       
+        private Dictionary<string, List<BossDropTable>> ParticularChestDropTables = new Dictionary<string, List<BossDropTable>>();        
         private Dictionary<string, DefeatedBossData> CurrentlyBeatenBosses = new Dictionary<string, DefeatedBossData>();
 
         public BossRushManager()
         {
+            BossRush.BossRushPlugin.Log.LogMessage($"Running Boss Rush Manager");
+            // Setting up the data holder
+            BossRushDropData.CommonChestLoot = new List<BossDropTable>();
+            BossRushDropData.SpecificChestLoot = new List<ParticularBossDropTable>();
+            BossRushDropData.BossRushCompletion = new List<BossDropTable>();
             FindXMLDefinitions();
         }
 
@@ -32,37 +36,57 @@ namespace BossRush
             string[] directoriesInPluginsFolder = Directory.GetDirectories(Paths.PluginPath);
             foreach (var directory in directoriesInPluginsFolder)
             {
-                string Path = $"{directory}/BossDrops";
-
-                if (HasFolder(Path))
+                string path = $"{directory}{Path.DirectorySeparatorChar}SideLoader{Path.DirectorySeparatorChar}BossRushDrops";
+                if (HasFolder(path))
                 {
-                    BossRush.BossRushPlugin.Log.LogMessage($"Checking {Path}");
-
-                    string[] filePaths = Directory.GetFiles(Path, "*.xml", SearchOption.AllDirectories);
-
+                    BossRush.BossRushPlugin.Log.LogMessage($"Checking {path}");
+                    string[] filePaths = Directory.GetFiles(path, "*.xml", SearchOption.AllDirectories);
+                    BossRush.BossRushPlugin.Log.LogMessage($"Fetching file paths");
                     foreach (var item in filePaths)
                     {
-                        BossDropData bossDropTable = DeserializeFromXML<BossDropData>(item);
-
+                        BossRush.BossRushPlugin.Log.LogMessage($"Serializing:");
+                        BossRushDropData bossRushDropDataListItem = DeserializeFromXML<BossRushDropData>(item);
                         //if its not null it deserialized correctly (is the correct type, exists etc)
-                        if (bossDropTable != null)
+                        if (bossRushDropDataListItem != null)
                         {
-
-                            BossRush.BossRushPlugin.Log.LogMessage($"Found drop table for UID : {bossDropTable.targetCharacterUID} Table count : {bossDropTable.DropTables.Count}");
-                            //does our dictionary already contain this character UID?
-                            if (BossDropTables.ContainsKey(bossDropTable.targetCharacterUID))
-                            {
-                                //if so update the list of drop data
-                                BossDropTables[bossDropTable.targetCharacterUID].Add(bossDropTable);
+                            // Inserting the data into BossRushDropData
+                            List<ParticularBossDropTable> specificChestLoot = bossRushDropDataListItem.SpecificChestLoot;
+                            
+                            //does our dictionary already contain this character UID?                           
+                            foreach (ParticularBossDropTable enemyFromXML in specificChestLoot)
+                            {                                
+                                // Check each element and combine droptables if UID is matching;                                                                                                         
+                                bool found = false;                                
+                                foreach (ParticularBossDropTable enemyFromStorage in BossRushDropData.SpecificChestLoot)
+                                {                                
+                                    // Add to existing list if found as well as marking that it has been found                                                                
+                                    if (enemyFromXML.targetCharacterUID == enemyFromStorage.targetCharacterUID)
+                                    {                                        
+                                        found = true;
+                                        enemyFromStorage.DropTables.AddRange(enemyFromXML.DropTables);
+                                        BossRush.BossRushPlugin.Log.LogMessage($"Adding element associated with: {enemyFromXML.targetCharacterUID}");
+                                        break;
+                                    }
+                                }
+                                if (!found)
+                                {
+                                    //add new an entry, initialise the list aswell.
+                                    List<ParticularBossDropTable> newList = new List<ParticularBossDropTable>();
+                                    newList.Add(enemyFromXML);
+                                    BossRushDropData.SpecificChestLoot.AddRange(newList);
+                                    BossRush.BossRushPlugin.Log.LogMessage($"Adding element associated with: {enemyFromXML.targetCharacterUID}");
+                                }
                             }
-                            else
+                            if (bossRushDropDataListItem.CommonChestLoot != null)
                             {
-                                //add new an entry, initialise the list aswell.
-                                List<BossDropData> newList = new List<BossDropData>();
-                                newList.Add(bossDropTable);
-                                BossDropTables.Add(bossDropTable.targetCharacterUID, newList);
+                                BossRush.BossRushPlugin.Log.LogMessage($"Adding element associated with commonchest");
+                                BossRushDropData.CommonChestLoot.AddRange(bossRushDropDataListItem.CommonChestLoot);
                             }
-
+                            if (bossRushDropDataListItem.BossRushCompletion != null)
+                            {
+                                BossRush.BossRushPlugin.Log.LogMessage($"Adding element associated with boss rush completion");
+                                BossRushDropData.BossRushCompletion.AddRange(bossRushDropDataListItem.BossRushCompletion);
+                            }                            
                         }
 
                         //try
@@ -100,10 +124,9 @@ namespace BossRush
                     {
                         defeatedBossData.DefeatedFoes = new List<string>();
                     }
-
                     defeatedBossData.DefeatedFoes.Add(foeUID);
-                }
-               
+                    // Force add reward to chest here.
+                }               
             }
             else
             {
@@ -148,23 +171,33 @@ namespace BossRush
 
         public bool HasDropDataFor(string CharacterUID)
         {
-            return BossDropTables.ContainsKey(CharacterUID);
+            foreach (ParticularBossDropTable enemyFromStorage in BossRushDropData.SpecificChestLoot)
+            {
+                // Add to existing list if found as well as marking that it has been found
+                if (CharacterUID == enemyFromStorage.targetCharacterUID)
+                {                    
+                    return true;
+                }
+            }
+            return false;
         }
 
-        public List<BossDropData> GetDropDataFor(string CharacterUID)
+        public List<BossDropTable> GetDropDataFor(string CharacterUID)
         {
-            if (HasDropDataFor(CharacterUID))
+            foreach (ParticularBossDropTable enemyFromStorage in BossRushDropData.SpecificChestLoot)
             {
-                return BossDropTables[CharacterUID];
+                // Add to existing list if found as well as marking that it has been found
+                if (CharacterUID == enemyFromStorage.targetCharacterUID)
+                {
+                    return enemyFromStorage.DropTables;
+                }
             }
-
-            //there is no data
             return null;
         }
 
         public T DeserializeFromXML<T>(string path)
         {
-            var serializer = new XmlSerializer(typeof(T), new Type[] { typeof(BossDropData), typeof(BossDropTable), typeof(DropItemData), typeof(WeightedDropItemData)});
+            var serializer = new XmlSerializer(typeof(T), new Type[] { typeof(BossRushDropData), typeof(ParticularBossDropTable), typeof(BossDropTable), typeof(DropItemData), typeof(WeightedDropItemData)});
             StreamReader reader = new StreamReader(path);
             T deserialized = (T)serializer.Deserialize(reader.BaseStream);
             reader.Close();
@@ -183,124 +216,8 @@ namespace BossRush
 
         private bool HasFolder(string FolderLocation)
         {
+            BossRush.BossRushPlugin.Log.LogMessage($"Has Folder ({FolderLocation}):{Directory.Exists(FolderLocation)}");
             return Directory.Exists(FolderLocation);
         }
-}
-
-
-
-    /*
-    public class CollectRewards
-    {
-        public List<string> droptableUIDs;
-        public List<BossRushRewardData> bossRushRewardData;
-
-        public CollectRewards() 
-        {
-            droptableUIDs = new List<string>();
-            bossRushRewardData = new List<BossRushRewardData>();
-
-            // Collect UIDs
-            List<string> classPathCollection = new List<string>();
-            string[] bepInExPluginPlugins = Directory.GetDirectories(Paths.PluginPath);
-            for (int i = 0; i < bepInExPluginPlugins.Length; i++)
-            {
-                string pluginFolderPath = bepInExPluginPlugins[i];
-                if (pluginFolderPath != null) 
-                {
-                    string[] allXMLPathsInPlugin = Directory.GetFiles(pluginFolderPath, "*.xml", SearchOption.AllDirectories);
-                    string[] validXMLPaths = FilterXMLPaths(allXMLPathsInPlugin);
-                    classPathCollection.AddRange(validXMLPaths);
-                }
-            }
-            
-            // Now to serialize the collected paths
-            for (int j = 0; j < classPathCollection.Count; j++)
-            {
-                string classPath = classPathCollection[j];
-                bossRushRewardData.Add(DeserializeXml<BossRushRewardData>(classPath));
-            }
-            BossRushPlugin.bossRushRewardDatas = bossRushRewardData;
-        }
-        private string[] FilterXMLPaths(string[] inpaths)
-        {
-            // Converting to lists first
-            List<string> pathsList = inpaths.ToList();
-            List<string> outpathsList = new List<string>();
-
-            // Checks each xml individually
-            for (int i = 0; i < pathsList.Count; i++) 
-            {
-                string path = pathsList[i];
-                if (IsXmlOfType<BossRushRewardData>(path))
-                {
-                    outpathsList.Add(path);
-                }
-            }
-            string[] outpaths = outpathsList.ToArray();
-            return outpaths;
-        }
-
-        public static bool IsXmlOfType<T>(string xmlPath)
-        {
-            try
-            {
-                XmlSerializer serializer = new XmlSerializer(typeof(T));
-                using (FileStream fs = new FileStream(xmlPath, FileMode.Open))
-                using (XmlReader reader = XmlReader.Create(fs))
-                {
-                    return serializer.CanDeserialize(reader);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error during validation: {ex.Message} Merry Christmas!");
-                return false;
-            }
-        }
-
-        public static T DeserializeXml<T>(string xmlPath)
-        {
-            if (!File.Exists(xmlPath))
-            {
-                BossRushPlugin.Log.LogError($"XML file not found at path: {xmlPath}");
-                throw new FileNotFoundException($"File not found at {xmlPath}");
-            }
-
-            try
-            {
-                XmlSerializer serializer = new XmlSerializer(typeof(T));
-
-                using (FileStream stream = new FileStream(xmlPath, FileMode.Open))
-                {
-                    T data = (T)serializer.Deserialize(stream);
-                    BossRushPlugin.Log.LogMessage("XML Deserialization Successful!");
-                    return data;
-                }
-            }
-            catch (Exception ex)
-            {
-                BossRushPlugin.Log.LogError($"Failed to deserialize XML: {ex.Message}");
-                throw;
-            }
-        }
     }
-
-    [Serializable] // Required for Unity
-    [XmlRoot("BossRushRewardContainer")] // Optional, specifies the root element name in XML
-    public class BossRushRewardData
-    {
-        [XmlArray("DropTableUID")]
-        [XmlArrayItem("String")]
-        public List<string> Strings = new List<string>();
-
-        // Optional: Parameterless constructor for XmlSerializer
-        public BossRushRewardData() { }
-
-        public BossRushRewardData(List<string> strings)
-        {
-            Strings = strings;
-        }
-    }
-    */
 }

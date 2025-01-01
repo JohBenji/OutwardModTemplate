@@ -79,7 +79,9 @@ namespace BossRush
                         {
                             foreach (var table in BossRushPlugin.Instance.BossRushManager.GetDropDataFor(__instance.UID))
                             {
+                                /*
                                 table.RollAndGrantDrops(worldHost);
+                                */
                             }
                         }
                     }               

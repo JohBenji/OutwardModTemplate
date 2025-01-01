@@ -7,6 +7,5 @@ namespace BossRush
     public class WeightedDropItemData : DropItemData
     {
         public float Weight;
-    }
-   
+    }   
 }
