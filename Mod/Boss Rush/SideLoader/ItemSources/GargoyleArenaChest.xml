@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<SL_ItemContainerSpawn xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <IdentifierName>GargoyleArenaChest</IdentifierName>
+  <ItemID>1000050</ItemID>
+  <Quantity>1</Quantity>
+  <SceneToSpawnIn>CalderaDungeonsBosses</SceneToSpawnIn>
+  <SpawnPosition>
+    <x>-3.5812</x>
+    <y>39.0874</y>
+    <z>-6702.122</z>
+  </SpawnPosition>
+  <SpawnRotation>
+    <x>0</x>
+    <y>34</y>
+    <z>0</z>
+  </SpawnRotation>
+  <ForceNonPickable>true</ForceNonPickable>
+  <TryLightFueledContainer>true</TryLightFueledContainer>
+  <SL_DropTableUIDs />
+  <HoursForDropRegeneration>0</HoursForDropRegeneration>
+</SL_ItemContainerSpawn>

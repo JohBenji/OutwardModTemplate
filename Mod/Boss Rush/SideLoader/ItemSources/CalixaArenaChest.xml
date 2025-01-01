@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<SL_ItemContainerSpawn xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <IdentifierName>CalixaArenaChest</IdentifierName>
+  <ItemID>1000050</ItemID>
+  <Quantity>1</Quantity>
+  <SceneToSpawnIn>AbrassarDungeonsBosses</SceneToSpawnIn>
+  <SpawnPosition>
+    <x>39.7859</x>
+    <y>0.2242</y>
+    <z>-4.6284</z>
+  </SpawnPosition>
+  <SpawnRotation>
+    <x>0</x>
+    <y>306.0397</y>
+    <z>0</z>
+  </SpawnRotation>
+  <ForceNonPickable>true</ForceNonPickable>
+  <TryLightFueledContainer>true</TryLightFueledContainer>
+  <SL_DropTableUIDs />
+  <HoursForDropRegeneration>0</HoursForDropRegeneration>
+</SL_ItemContainerSpawn>
