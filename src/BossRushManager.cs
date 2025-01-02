@@ -54,7 +54,7 @@ namespace BossRush
                                 if (bossRushDropDataListItem.OptionalString != "")
                                 {                                    
                                     ID = bossRushDropDataListItem.OptionalString;
-                                    // Here are: Droptables which will be added to every chest
+                                    // Here are: Droptables which will be added to a particular chest
                                 }
                                 else
                                 {
