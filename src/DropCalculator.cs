@@ -6,8 +6,13 @@ namespace BossRush
 {
     public static class DropCalculator
     {
+        
         public static List<DropItemData> CalculateDrops(BossDropTable table)
         {
+            // COMMENT: This needs to be remade to fit with SL_DropTable because it needs to be run on completion of the bossrush which is given directly to the host and not to an item, thus it doesn't take SL_DropTable and needs to be processed.
+            // Alternatively a different class needs to be made that doesn't use SL_DropTable as a base. 
+
+            /*
             List<DropItemData> results = new List<DropItemData>();
 
             int rolls = UnityEngine.Random.Range(table.MinRolls, table.MaxRolls + 1);
@@ -39,6 +44,7 @@ namespace BossRush
             }
 
             return results;
+            */
         }
 
         public static void GrantDropsTo(this Character character, List<DropItemData> drops)

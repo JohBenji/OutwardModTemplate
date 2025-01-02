@@ -12,9 +12,7 @@ namespace BossRush
         public static void Init(ConfigFile config)
         {
             ConfigElements.includeProgressMessage = config.Bind<bool>("Boss Rush", "Display Progress Messages", true);
-        }
-        // Floats
+        }        
         public static ConfigEntry<bool> includeProgressMessage;
-
     }
 }

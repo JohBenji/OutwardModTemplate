@@ -74,16 +74,8 @@ namespace BossRush
 
                     if (worldHost != null) 
                     {
+                        // COMMENT: Used for giving the BossRushCompletion reward [Not from chests, but given directly to the player's inventory]
                         BossRushPlugin.Instance.BossRushManager.RecordVictory(worldHost.UID, __instance.UID);
-                        if (BossRushPlugin.Instance.BossRushManager.HasDropDataFor(__instance.UID))
-                        {
-                            foreach (var table in BossRushPlugin.Instance.BossRushManager.GetDropDataFor(__instance.UID))
-                            {
-                                /*
-                                table.RollAndGrantDrops(worldHost);
-                                */
-                            }
-                        }
                     }               
                 }
             }        

@@ -16,6 +16,6 @@
   </SpawnRotation>
   <ForceNonPickable>true</ForceNonPickable>
   <TryLightFueledContainer>true</TryLightFueledContainer>
-  <SL_DropTableUIDs />
+  <SL_DropTableUIDs />  
   <HoursForDropRegeneration>0</HoursForDropRegeneration>
 </SL_ItemContainerSpawn>

@@ -15,18 +15,13 @@ using static AttackPattern;
 namespace BossRush
 {
     public class BossRushManager
-    {
-        private BossRushDropData BossRushDropData = new BossRushDropData();       
-        private Dictionary<string, List<BossDropTable>> ParticularChestDropTables = new Dictionary<string, List<BossDropTable>>();        
+    {        
         private Dictionary<string, DefeatedBossData> CurrentlyBeatenBosses = new Dictionary<string, DefeatedBossData>();
 
         public BossRushManager()
         {
             BossRush.BossRushPlugin.Log.LogMessage($"Running Boss Rush Manager");
             // Setting up the data holder
-            BossRushDropData.CommonChestLoot = new List<BossDropTable>();
-            BossRushDropData.SpecificChestLoot = new List<ParticularBossDropTable>();
-            BossRushDropData.BossRushCompletion = new List<BossDropTable>();
             FindXMLDefinitions();
         }
 
@@ -41,53 +36,42 @@ namespace BossRush
                 {
                     BossRush.BossRushPlugin.Log.LogMessage($"Checking {path}");
                     string[] filePaths = Directory.GetFiles(path, "*.xml", SearchOption.AllDirectories);
-                    BossRush.BossRushPlugin.Log.LogMessage($"Fetching file paths");
                     foreach (var item in filePaths)
                     {
-                        BossRush.BossRushPlugin.Log.LogMessage($"Serializing:");
-                        BossRushDropData bossRushDropDataListItem = DeserializeFromXML<BossRushDropData>(item);
+                        BossRush.BossRushPlugin.Log.LogMessage($"Deserializing:");
+                        SL_BossRushDropTable bossRushDropDataListItem = DeserializeFromXML<SL_BossRushDropTable>(item);
                         //if its not null it deserialized correctly (is the correct type, exists etc)
                         if (bossRushDropDataListItem != null)
                         {
-                            // Inserting the data into BossRushDropData
-                            List<ParticularBossDropTable> specificChestLoot = bossRushDropDataListItem.SpecificChestLoot;
-                            
-                            //does our dictionary already contain this character UID?                           
-                            foreach (ParticularBossDropTable enemyFromXML in specificChestLoot)
-                            {                                
-                                // Check each element and combine droptables if UID is matching;                                                                                                         
-                                bool found = false;                                
-                                foreach (ParticularBossDropTable enemyFromStorage in BossRushDropData.SpecificChestLoot)
-                                {                                
-                                    // Add to existing list if found as well as marking that it has been found                                                                
-                                    if (enemyFromXML.targetCharacterUID == enemyFromStorage.targetCharacterUID)
-                                    {                                        
-                                        found = true;
-                                        enemyFromStorage.DropTables.AddRange(enemyFromXML.DropTables);
-                                        BossRush.BossRushPlugin.Log.LogMessage($"Adding element associated with: {enemyFromXML.targetCharacterUID}");
-                                        break;
-                                    }
+                            if (bossRushDropDataListItem.TypeOfBossRushDropTable == BossRushDropTableType.CommonChestLoot)
+                            {
+                                // Here are: Droptables which will be added to every chest
+                            }
+                            if (bossRushDropDataListItem.TypeOfBossRushDropTable == BossRushDropTableType.SpecificChestLoot)
+                            {
+                                // The OptionalString is used to target the correct item / itemcontainer (chest). Could be an 'int' for targetting itemID, or 'string' for the itemspawncontainer identifier.
+                                string ID;
+                                if (bossRushDropDataListItem.OptionalString != "")
+                                {                                    
+                                    ID = bossRushDropDataListItem.OptionalString;
+                                    // Here are: Droptables which will be added to every chest
                                 }
-                                if (!found)
+                                else
                                 {
-                                    //add new an entry, initialise the list aswell.
-                                    List<ParticularBossDropTable> newList = new List<ParticularBossDropTable>();
-                                    newList.Add(enemyFromXML);
-                                    BossRushDropData.SpecificChestLoot.AddRange(newList);
-                                    BossRush.BossRushPlugin.Log.LogMessage($"Adding element associated with: {enemyFromXML.targetCharacterUID}");
-                                }
+                                    // DO NOTHING.
+                                }                                
                             }
-                            if (bossRushDropDataListItem.CommonChestLoot != null)
+                            if (bossRushDropDataListItem.TypeOfBossRushDropTable == BossRushDropTableType.BossRushCompletion)
                             {
-                                BossRush.BossRushPlugin.Log.LogMessage($"Adding element associated with commonchest");
-                                BossRushDropData.CommonChestLoot.AddRange(bossRushDropDataListItem.CommonChestLoot);
+                                // ADD THIS DROPTABLE AS A REWARD (WHICH GOES STRAIGHT INTO YOUR INVENTORY) WHEN FINISHING THE BOSS RUSH. This uses similar code as originally.
                             }
-                            if (bossRushDropDataListItem.BossRushCompletion != null)
-                            {
-                                BossRush.BossRushPlugin.Log.LogMessage($"Adding element associated with boss rush completion");
-                                BossRushDropData.BossRushCompletion.AddRange(bossRushDropDataListItem.BossRushCompletion);
-                            }                            
+
+                            // ADDITIONAL NOTES BUT NOT RELEVANT TO WHAT IS DONE HERE NECESSARILY. KEEP IN MIND THE THAT WE NEED MORE STEPS:                            
+                            // STEP 1: Deserialization (THIS IS WHAT WE DO HERE)
+                            // STEP 2: Setup the chests: (1) with itemID of chests or (2) with ID string for the itemcontainer. For a particular chest, chest_A the droptable needs to be DT(CommonChestLoot) + DT(SpecificChest_A)
+                            // Step 3: Make the boss rush completion work with DT (not sure how this would be done). Maybe a conversion of SL_DropTable or being forced to make a class that is also in XML but doesn't inherit from SL_DropTable
                         }
+
 
                         //try
                         //{
@@ -184,6 +168,8 @@ namespace BossRush
 
         public List<BossDropTable> GetDropDataFor(string CharacterUID)
         {
+            // COMMENT: Not sure if this class is needed ¯\_(ツ)_/¯. For the chests it's definitely not needed, but for giving the items directly to the player upon boss completion it might be needed.
+            /*
             foreach (ParticularBossDropTable enemyFromStorage in BossRushDropData.SpecificChestLoot)
             {
                 // Add to existing list if found as well as marking that it has been found
@@ -193,10 +179,11 @@ namespace BossRush
                 }
             }
             return null;
+            */
         }
 
         public T DeserializeFromXML<T>(string path)
-        {
+        {            
             var serializer = new XmlSerializer(typeof(T), new Type[] { typeof(BossRushDropData), typeof(ParticularBossDropTable), typeof(BossDropTable), typeof(DropItemData), typeof(WeightedDropItemData)});
             StreamReader reader = new StreamReader(path);
             T deserialized = (T)serializer.Deserialize(reader.BaseStream);

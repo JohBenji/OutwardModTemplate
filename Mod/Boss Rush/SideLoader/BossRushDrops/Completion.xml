@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SL_BossRushDropTable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <UID>DT_Chest</UID>
+  <GuaranteedDrops>
+    <SL_ItemDrop>
+      <MinQty>1</MinQty>
+      <MaxQty>1</MaxQty>
+      <DroppedItemID>6200010</DroppedItemID>
+    </SL_ItemDrop>
+  </GuaranteedDrops>
+  <RandomTables />
+  <OptionalString></OptionalString>
+  <TypeOfBossRushDropTable>BossRushCompletion</TypeOfBossRushDropTable>
+</SL_BossRushDropTable>

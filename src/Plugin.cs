@@ -299,41 +299,9 @@ namespace BossRush
 
         public void giveReward(Character character)
         {
-            // Here should the reward be given upon completing the boss rush
-
-            // Previous Code:
-            /*
-            Log.LogMessage($"Granting rewards to {character.Name}...");
-
-            if (this.BossRushManager != null  && this.BossRushManager.HasRecord(character.UID))
-            {
-
-                List<string> list = this.BossRushManager.GetDefeatedFoesFor(character.UID);
-                Log.LogMessage($"{character.Name} has {list.Count} foes defeated.");
-
-                foreach (var defeatedFoeUID in list)
-                {
-                    Log.LogMessage($"{character.Name} has defeated {defeatedFoeUID}");
-
-                    if (this.BossRushManager.HasDropDataFor(defeatedFoeUID))
-                    {
-
-                        Log.LogMessage($"{defeatedFoeUID} has drop data.");
-                        foreach (var table in this.BossRushManager.GetDropDataFor(defeatedFoeUID))
-                        {
-                            Log.LogMessage($"Rolling {table.DropTables.Count} drop tables.");
-                            table.RollAndGrantDrops(character);
-                        }
-                    }
-                }
-            }
-            */
+            // Here should the reward be given upon completing the boss rush! [THIS IS NOT FOR THE CHESTS]
         }
 
-        public void giveChestReward()
-        {
-            // Here should the reward be stored in the chest
-        }
 
         public static void delayTeleport(Character character) 
         {
