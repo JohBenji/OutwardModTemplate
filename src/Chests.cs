@@ -10,30 +10,30 @@ namespace BossRush
 {
     public class ApplyChests
     {
-        public List<string> sharksDroptableUIDs;
-        public List<string> calixaDroptableUIDs;
-        public List<string> beastDroptableUIDs;
+        private List<string> sharksDroptableUIDs;
+        private List<string> calixaDroptableUIDs;
+        private List<string> beastDroptableUIDs;
 
-        public List<string> cageDroptableUIDs;
-        public List<string> boozuDroptableUIDs;
-        public List<string> sublimeDroptableUIDs;
+        private List<string> cageDroptableUIDs;
+        private List<string> boozuDroptableUIDs;
+        private List<string> sublimeDroptableUIDs;
 
-        public List<string> crimsonDroptableUIDs;
-        public List<string> gargoyleDroptableUIDs;
-        public List<string> grandmotherDroptableUIDs;
-        public List<string> torcrabDroptableUIDs;
+        private List<string> crimsonDroptableUIDs;
+        private List<string> gargoyleDroptableUIDs;
+        private List<string> grandmotherDroptableUIDs;
+        private List<string> torcrabDroptableUIDs;
 
-        public List<string> mantisDroptableUIDs;
-        public List<string> squireDroptableUIDs;
-        public List<string> trogqueenDroptableUIDs;
+        private List<string> mantisDroptableUIDs;
+        private List<string> squireDroptableUIDs;
+        private List<string> trogqueenDroptableUIDs;
 
-        public List<string> burningmanDroptableUIDs;
-        public List<string> lichesroptableUIDs;
-        public List<string> immaculateDroptableUIDs;
+        private List<string> burningmanDroptableUIDs;
+        private List<string> lichesroptableUIDs;
+        private List<string> immaculateDroptableUIDs;
 
-        public List<string> giantsDroptableUIDs;
-        public List<string> highmonkDroptableUIDs;
-        public List<string> tuanosaurDroptableUIDs;
+        private List<string> giantsDroptableUIDs;
+        private List<string> highmonkDroptableUIDs;
+        private List<string> tuanosaurDroptableUIDs;
 
 
         public void ApplyTemplate(string sceneName, Vector3 spawnPosition, Vector3 spawnRotation, List<string> droptableUIDs)
@@ -51,8 +51,8 @@ namespace BossRush
                 SL_DropTableUIDs = droptableUIDs,
                 HoursForDropRegeneration = 0
             }.ApplyTemplate();
-        }       
-
+        }
+        
         public ApplyChests()
         {
             BossRushPlugin.Log.LogMessage("Applying chests...");
@@ -76,6 +76,52 @@ namespace BossRush
             ApplyTemplate("HallowedDungeonsBosses", new Vector3(296.2264f, 38.1305f, 1267.148f), new Vector3(0f, 36f, 0f), giantsDroptableUIDs); // Giants
             ApplyTemplate("HallowedDungeonsBosses", new Vector3(-4.7489f, 1.1121f, -64.2392f), new Vector3(0f, 17f, 0f), highmonkDroptableUIDs); // Highmonk
             ApplyTemplate("HallowedDungeonsBosses", new Vector3(1960.069f, -389.8761f, 1674.676f), new Vector3(0f, 222f, 0f), tuanosaurDroptableUIDs); // Tuanosaur                        
+        }
+
+        public void AddDropTable(string bossRushDropTableUID,string targetBoss)
+        {
+            if (targetBoss == "sharksDroptableUIDs") { sharksDroptableUIDs.Add(bossRushDropTableUID); }
+            else if (targetBoss == "calixaDroptableUIDs") { calixaDroptableUIDs.Add(bossRushDropTableUID); }
+            else if (targetBoss == "beastDroptableUIDs") { beastDroptableUIDs.Add(bossRushDropTableUID); }
+            else if (targetBoss == "cageDroptableUIDs") { cageDroptableUIDs.Add(bossRushDropTableUID); }
+            else if (targetBoss == "boozuDroptableUIDs") { boozuDroptableUIDs.Add(bossRushDropTableUID); }
+            else if (targetBoss == "sublimeDroptableUIDs") { sublimeDroptableUIDs.Add(bossRushDropTableUID); }
+            else if (targetBoss == "crimsonDroptableUIDs") { crimsonDroptableUIDs.Add(bossRushDropTableUID); }
+            else if (targetBoss == "gargoyleDroptableUIDs") { gargoyleDroptableUIDs.Add(bossRushDropTableUID); }
+            else if (targetBoss == "grandmotherDroptableUIDs") { grandmotherDroptableUIDs.Add(bossRushDropTableUID); }
+            else if (targetBoss == "squireDroptableUIDs") { squireDroptableUIDs.Add(bossRushDropTableUID); }
+            else if (targetBoss == "trogqueenDroptableUIDs") { trogqueenDroptableUIDs.Add(bossRushDropTableUID); }
+            else if (targetBoss == "mantisDroptableUIDs") { mantisDroptableUIDs.Add(bossRushDropTableUID); }
+            else if (targetBoss == "burningmanDroptableUIDs") { burningmanDroptableUIDs.Add(bossRushDropTableUID); }
+            else if (targetBoss == "lichesroptableUIDs") { lichesroptableUIDs.Add(bossRushDropTableUID); }
+            else if (targetBoss == "immaculateDroptableUIDs") { immaculateDroptableUIDs.Add(bossRushDropTableUID); }
+            else if (targetBoss == "giantsDroptableUIDs") { giantsDroptableUIDs.Add(bossRushDropTableUID); }
+            else if (targetBoss == "highmonkDroptableUIDs") { highmonkDroptableUIDs.Add(bossRushDropTableUID); }
+            else if (targetBoss == "tuanosaurDroptableUIDs") { tuanosaurDroptableUIDs.Add(bossRushDropTableUID); }
+            else { }
+        }
+
+        public void AddDropTableToAll(string bossRushDropTableUID)
+        {
+            sharksDroptableUIDs.Add(bossRushDropTableUID);
+            calixaDroptableUIDs.Add(bossRushDropTableUID);
+            beastDroptableUIDs.Add(bossRushDropTableUID);
+            cageDroptableUIDs.Add(bossRushDropTableUID);
+            boozuDroptableUIDs.Add(bossRushDropTableUID);
+            sublimeDroptableUIDs.Add(bossRushDropTableUID);
+            crimsonDroptableUIDs.Add(bossRushDropTableUID);
+            gargoyleDroptableUIDs.Add(bossRushDropTableUID);
+            grandmotherDroptableUIDs.Add(bossRushDropTableUID);
+            torcrabDroptableUIDs.Add(bossRushDropTableUID);
+            mantisDroptableUIDs.Add(bossRushDropTableUID);
+            squireDroptableUIDs.Add(bossRushDropTableUID);
+            trogqueenDroptableUIDs.Add(bossRushDropTableUID);
+            burningmanDroptableUIDs.Add(bossRushDropTableUID);
+            lichesroptableUIDs.Add(bossRushDropTableUID);
+            immaculateDroptableUIDs.Add(bossRushDropTableUID);
+            giantsDroptableUIDs.Add(bossRushDropTableUID);
+            highmonkDroptableUIDs.Add(bossRushDropTableUID);
+            tuanosaurDroptableUIDs.Add(bossRushDropTableUID);
         }
     }
 }
