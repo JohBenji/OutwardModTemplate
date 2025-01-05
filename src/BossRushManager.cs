@@ -45,7 +45,7 @@ namespace BossRush
                         {
                             if (bossRushDropDataListItem.TypeOfBossRushDropTable == BossRushDropTableType.CommonChestLoot)
                             {
-                                // Here are: Droptables which will be added to every chest
+                                // Here will be: Droptables which will be added to every chest
                             }
                             if (bossRushDropDataListItem.TypeOfBossRushDropTable == BossRushDropTableType.SpecificChestLoot)
                             {
@@ -54,7 +54,7 @@ namespace BossRush
                                 if (bossRushDropDataListItem.OptionalString != "")
                                 {                                    
                                     ID = bossRushDropDataListItem.OptionalString;
-                                    // Here are: Droptables which will be added to a particular chest
+                                    // Here will be: Droptables which will be added to a particular chest
                                 }
                                 else
                                 {
@@ -63,7 +63,7 @@ namespace BossRush
                             }
                             if (bossRushDropDataListItem.TypeOfBossRushDropTable == BossRushDropTableType.BossRushCompletion)
                             {
-                                // ADD THIS DROPTABLE AS A REWARD (WHICH GOES STRAIGHT INTO YOUR INVENTORY) WHEN FINISHING THE BOSS RUSH. This uses similar code as originally.
+                                // Here will be: Droptables which will be added to the host player upon completing the boss rush
                             }
 
                             // ADDITIONAL NOTES BUT NOT RELEVANT TO WHAT IS DONE HERE NECESSARILY. KEEP IN MIND THE THAT WE NEED MORE STEPS:                            
@@ -153,6 +153,7 @@ namespace BossRush
             return new List<string>();
         }
 
+        /*
         public bool HasDropDataFor(string CharacterUID)
         {
             foreach (ParticularBossDropTable enemyFromStorage in BossRushDropData.SpecificChestLoot)
@@ -165,11 +166,12 @@ namespace BossRush
             }
             return false;
         }
+        */
 
+        /*
         public List<BossDropTable> GetDropDataFor(string CharacterUID)
         {
             // COMMENT: Not sure if this class is needed ¯\_(ツ)_/¯. For the chests it's definitely not needed, but for giving the items directly to the player upon boss completion it might be needed.
-            /*
             foreach (ParticularBossDropTable enemyFromStorage in BossRushDropData.SpecificChestLoot)
             {
                 // Add to existing list if found as well as marking that it has been found
@@ -179,12 +181,14 @@ namespace BossRush
                 }
             }
             return null;
-            */
+            
         }
+        */
+
 
         public T DeserializeFromXML<T>(string path)
         {            
-            var serializer = new XmlSerializer(typeof(T), new Type[] { typeof(BossRushDropData), typeof(ParticularBossDropTable), typeof(BossDropTable), typeof(DropItemData), typeof(WeightedDropItemData)});
+            var serializer = new XmlSerializer(typeof(T), new Type[] { typeof(SL_BossRushDropTable)});
             StreamReader reader = new StreamReader(path);
             T deserialized = (T)serializer.Deserialize(reader.BaseStream);
             reader.Close();

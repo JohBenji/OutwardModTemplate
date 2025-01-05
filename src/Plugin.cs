@@ -42,6 +42,7 @@ namespace BossRush
         public static bool rewardReq2 = false;
         public static PortalManager portalManager;
         public static Character portalCharacter;
+        public static ApplyChests applyChests;
         //public static List<BossRushRewardData> bossRushRewardDatas;
 
         // For accessing your BepInEx Logger from outside of this class (eg Plugin.Log.LogMessage("");)
@@ -57,15 +58,20 @@ namespace BossRush
         public static BossRushPlugin Instance { get; private set; }
 
 
+
         // Awake is called when your plugin is created. Use this to set up your mod.
         internal void Awake()
         {
             Instance = this;
             Log = this.Logger;
 
+            BossRushPlugin.Log.LogMessage("Awake method");
+
             //create a new instance of the class calls the constructor which calls FindXMLDefinitions
             BossRushManager = new BossRushManager();
             portalManager = new PortalManager();
+            applyChests = new ApplyChests();
+
 
             ConfigElements.Init(base.Config);
             SceneManager.sceneLoaded += SceneManager_sceneLoaded;
@@ -87,6 +93,7 @@ namespace BossRush
                 {
                     if (___AreaName == "Emercar")
                     {
+                        BossRushPlugin.Log.LogMessage("Harmony Patch: RegionRefresh");
                         BossRushPlugin.activated = false;
                         BossRushPlugin.rewardReq1 = false;
                         BossRushPlugin.rewardReq2 = false;
