@@ -54,28 +54,28 @@ namespace BossRush
                                 if (bossRushDropDataListItem.TypeOfBossRushDropTable == BossRushDropTableType.SpecificChestLoot)
                                 {
                                     // The OptionalString is used to target the correct item / itemcontainer (chest). Could be an 'int' for targetting itemID, or 'string' for the itemspawncontainer identifier.
-                                    if (bossRushDropDataListItem.SpecificChestData != BossSelectionEnum.None)
+                                    if (bossRushDropDataListItem.SpecificChestLootTarget != BossSelectionEnum.None)
                                     {
 
-                                        if (bossRushDropDataListItem.SpecificChestData == BossSelectionEnum.Elite_Crescent_Sharks) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "sharksDroptableUIDs"); }
-                                        else if (bossRushDropDataListItem.SpecificChestData == BossSelectionEnum.Calixa) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "calixaDroptableUIDs"); }
-                                        else if (bossRushDropDataListItem.SpecificChestData == BossSelectionEnum.Elite_Beast_Golem) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "beastDroptableUIDs"); }
-                                        else if (bossRushDropDataListItem.SpecificChestData == BossSelectionEnum.Immaculates_Bird) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "cageDroptableUIDs"); }
-                                        else if (bossRushDropDataListItem.SpecificChestData == BossSelectionEnum.Elite_Boozu) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "boozuDroptableUIDs"); }
-                                        else if (bossRushDropDataListItem.SpecificChestData == BossSelectionEnum.Elite_Sublime_Shell) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "sublimeDroptableUIDs"); }
-                                        else if (bossRushDropDataListItem.SpecificChestData == BossSelectionEnum.Elite_Crimson_Avatar) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "crimsonDroptableUIDs"); }
-                                        else if (bossRushDropDataListItem.SpecificChestData == BossSelectionEnum.Elite_Gargoyles) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "gargoyleDroptableUIDs"); }
-                                        else if (bossRushDropDataListItem.SpecificChestData == BossSelectionEnum.Grandmother) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "grandmotherDroptableUIDs"); }
-                                        else if (bossRushDropDataListItem.SpecificChestData == BossSelectionEnum.Elite_Torcrab) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "torcrabDroptableUIDs"); }
-                                        else if (bossRushDropDataListItem.SpecificChestData == BossSelectionEnum.Elite_Mantis_Shrimp) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "mantisDroptableUIDs"); }
-                                        else if (bossRushDropDataListItem.SpecificChestData == BossSelectionEnum.Brand_Squire) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "squireDroptableUIDs"); }
-                                        else if (bossRushDropDataListItem.SpecificChestData == BossSelectionEnum.Trolgodyte_Queen) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "trogqueenDroptableUIDs"); }
-                                        else if (bossRushDropDataListItem.SpecificChestData == BossSelectionEnum.Elite_Burning_Man) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "burningmanDroptableUIDs"); }
-                                        else if (bossRushDropDataListItem.SpecificChestData == BossSelectionEnum.Liches) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "lichesroptableUIDs"); }
-                                        else if (bossRushDropDataListItem.SpecificChestData == BossSelectionEnum.Dreamer_Immaculate) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "immaculateDroptableUIDs"); }
-                                        else if (bossRushDropDataListItem.SpecificChestData == BossSelectionEnum.Ash_Giants) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "giantsDroptableUIDs"); }
-                                        else if (bossRushDropDataListItem.SpecificChestData == BossSelectionEnum.Ash_Giant_Highmonk) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "highmonkDroptableUIDs"); }
-                                        else if (bossRushDropDataListItem.SpecificChestData == BossSelectionEnum.Elite_Alpha_Tuanosaur) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "tuanosaurDroptableUIDs"); }
+                                        if (bossRushDropDataListItem.SpecificChestLootTarget == BossSelectionEnum.Elite_Crescent_Sharks) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "sharksDroptableUIDs"); }
+                                        else if (bossRushDropDataListItem.SpecificChestLootTarget == BossSelectionEnum.Calixa) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "calixaDroptableUIDs"); }
+                                        else if (bossRushDropDataListItem.SpecificChestLootTarget == BossSelectionEnum.Elite_Beast_Golem) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "beastDroptableUIDs"); }
+                                        else if (bossRushDropDataListItem.SpecificChestLootTarget == BossSelectionEnum.Immaculates_Bird) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "cageDroptableUIDs"); }
+                                        else if (bossRushDropDataListItem.SpecificChestLootTarget == BossSelectionEnum.Elite_Boozu) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "boozuDroptableUIDs"); }
+                                        else if (bossRushDropDataListItem.SpecificChestLootTarget == BossSelectionEnum.Elite_Sublime_Shell) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "sublimeDroptableUIDs"); }
+                                        else if (bossRushDropDataListItem.SpecificChestLootTarget == BossSelectionEnum.Elite_Crimson_Avatar) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "crimsonDroptableUIDs"); }
+                                        else if (bossRushDropDataListItem.SpecificChestLootTarget == BossSelectionEnum.Elite_Gargoyles) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "gargoyleDroptableUIDs"); }
+                                        else if (bossRushDropDataListItem.SpecificChestLootTarget == BossSelectionEnum.Grandmother) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "grandmotherDroptableUIDs"); }
+                                        else if (bossRushDropDataListItem.SpecificChestLootTarget == BossSelectionEnum.Elite_Torcrab) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "torcrabDroptableUIDs"); }
+                                        else if (bossRushDropDataListItem.SpecificChestLootTarget == BossSelectionEnum.Elite_Mantis_Shrimp) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "mantisDroptableUIDs"); }
+                                        else if (bossRushDropDataListItem.SpecificChestLootTarget == BossSelectionEnum.Brand_Squire) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "squireDroptableUIDs"); }
+                                        else if (bossRushDropDataListItem.SpecificChestLootTarget == BossSelectionEnum.Trolgodyte_Queen) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "trogqueenDroptableUIDs"); }
+                                        else if (bossRushDropDataListItem.SpecificChestLootTarget == BossSelectionEnum.Elite_Burning_Man) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "burningmanDroptableUIDs"); }
+                                        else if (bossRushDropDataListItem.SpecificChestLootTarget == BossSelectionEnum.Liches) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "lichesroptableUIDs"); }
+                                        else if (bossRushDropDataListItem.SpecificChestLootTarget == BossSelectionEnum.Dreamer_Immaculate) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "immaculateDroptableUIDs"); }
+                                        else if (bossRushDropDataListItem.SpecificChestLootTarget == BossSelectionEnum.Ash_Giants) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "giantsDroptableUIDs"); }
+                                        else if (bossRushDropDataListItem.SpecificChestLootTarget == BossSelectionEnum.Ash_Giant_Highmonk) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "highmonkDroptableUIDs"); }
+                                        else if (bossRushDropDataListItem.SpecificChestLootTarget == BossSelectionEnum.Elite_Alpha_Tuanosaur) { BossRushPlugin.chests.AddDropTable(bossRushDropDataListItem.UID, "tuanosaurDroptableUIDs"); }
                                         else { BossRushPlugin.Log.LogMessage("'Optional String' must be one of the following: 'shark', 'calixa', 'beast', 'cage', 'boozu', 'sublime', 'crimson', 'gargoyle', 'grandmother', 'torcrab', 'mantis', 'squire', 'trog', 'burning', 'lich', 'dreamer', 'giant', 'high', 'tuano'"); }
 
                                     }

@@ -12,7 +12,7 @@ namespace BossRush
     public class SL_BossRushDropTable : SL_DropTable
     {
         public BossRushDropTableType TypeOfBossRushDropTable;
-        public BossSelectionEnum SpecificChestData;
+        public BossSelectionEnum SpecificChestLootTarget;
     }
 
     [Serializable]
