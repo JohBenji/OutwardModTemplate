@@ -42,7 +42,7 @@ namespace BossRush
         public static bool rewardReq2 = false;
         public static PortalManager portalManager;
         public static Character portalCharacter;
-        public static ApplyChests applyChests;
+        public static Chests chests;
         //public static List<BossRushRewardData> bossRushRewardDatas;
 
         // For accessing your BepInEx Logger from outside of this class (eg Plugin.Log.LogMessage("");)
@@ -68,9 +68,11 @@ namespace BossRush
             BossRushPlugin.Log.LogMessage("Awake method");
 
             //create a new instance of the class calls the constructor which calls FindXMLDefinitions
+            chests = new Chests();
+            chests.initiateChests();
             BossRushManager = new BossRushManager();
             portalManager = new PortalManager();
-            applyChests = new ApplyChests();
+            
 
 
             ConfigElements.Init(base.Config);
