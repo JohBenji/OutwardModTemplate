@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<SL_ItemContainerSpawn xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <IdentifierName>BergChestTest</IdentifierName>
+  <ItemID>1000000</ItemID>
+  <Quantity>1</Quantity>
+  <SceneToSpawnIn>Berg</SceneToSpawnIn>
+  <SpawnPosition>
+    <x>1197.47021</x>
+    <y>-13.7222176</y>
+    <z>1382.09265</z>
+  </SpawnPosition>
+  <SpawnRotation>
+    <x>-0</x>
+    <y>140.825531</y>
+    <z>0</z>
+  </SpawnRotation>
+  <ForceNonPickable>true</ForceNonPickable>
+  <TryLightFueledContainer>true</TryLightFueledContainer>
+  <SL_DropTableUIDs>
+    <string>DT_Chest</string>
+	<string>DT_Chest2</string>
+  </SL_DropTableUIDs>
+  <HoursForDropRegeneration>0</HoursForDropRegeneration>
+</SL_ItemContainerSpawn>
