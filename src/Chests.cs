@@ -34,7 +34,6 @@ namespace BossRush
         private List<string> giantsDroptableUIDs;
         private List<string> highmonkDroptableUIDs;
         private List<string> tuanosaurDroptableUIDs;
-        
 
         public void initiateChests()
         {
@@ -61,10 +60,10 @@ namespace BossRush
 
         public void ApplyTemplate(string sceneName, Vector3 spawnPosition, Vector3 spawnRotation, List<string> droptableUIDs)
         {
-            new SL_ItemContainerSpawn()
+            SL_ItemContainerSpawn itemcontainer = new SL_ItemContainerSpawn()
             {
                 IdentifierName = $"{sceneName}_{(int)spawnPosition.magnitude}_{(int)spawnRotation.magnitude}",
-                ItemID = 1000050,
+                ItemID = 1000040,
                 Quantity = 1,
                 SceneToSpawnIn = sceneName,
                 SpawnPosition = spawnPosition,
@@ -73,7 +72,8 @@ namespace BossRush
                 TryLightFueledContainer = true,
                 SL_DropTableUIDs = droptableUIDs,
                 HoursForDropRegeneration = 0
-            }.ApplyTemplate();
+            };
+            itemcontainer.ApplyTemplate();
 
             foreach (string uid in droptableUIDs)
             {

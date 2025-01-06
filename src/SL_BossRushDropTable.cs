@@ -18,6 +18,7 @@ namespace BossRush
     [Serializable]
     public enum BossRushDropTableType
     {
+        None = 0,
         CommonChestLoot,
         SpecificChestLoot,
         BossRushCompletion
@@ -25,7 +26,7 @@ namespace BossRush
     [Serializable]
     public enum BossSelectionEnum
     {
-        None,
+        None = 0,
         Elite_Crescent_Sharks,
         Calixa,
         Elite_Beast_Golem,

@@ -73,16 +73,16 @@ namespace BossRush
             BossRushManager = new BossRushManager();
             portalManager = new PortalManager();
             
-
-
             ConfigElements.Init(base.Config);
             SceneManager.sceneLoaded += SceneManager_sceneLoaded;
-            new Harmony(GUID).PatchAll();       
+            SL.OnPacksLoaded += this.SL_OnPacksLoaded;
+            new Harmony(GUID).PatchAll();
 
-            /*
-            Plan:
-            - Fire particle effect when activated
-            */
+        }
+
+        private void SL_OnPacksLoaded()
+        {
+
         }
 
 
