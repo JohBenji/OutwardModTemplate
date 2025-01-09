@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using SideLoader;
@@ -74,11 +75,12 @@ namespace BossRush
                 HoursForDropRegeneration = 0
             };
             itemcontainer.ApplyTemplate();
-
+            BossRushPlugin.Log.LogMessage($"For '{sceneName}_{(int)spawnPosition.magnitude}_{(int)spawnRotation.magnitude}':");
             foreach (string uid in droptableUIDs)
             {
-                BossRushPlugin.Log.LogMessage($"{sceneName}_{(int)spawnPosition.magnitude}_{(int)spawnRotation.magnitude}: {uid}");
+                BossRushPlugin.Log.LogMessage($"Adding UID: {uid}");
             }
+            BossRushPlugin.Log.LogMessage($"Applying template");
         }
         
         public void ApplyChests()
