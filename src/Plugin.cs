@@ -75,12 +75,18 @@ namespace BossRush
             
             ConfigElements.Init(base.Config);
             SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+            SL.BeforePacksLoaded += this.SL_BeforePacksLoaded;
             SL.OnPacksLoaded += this.SL_OnPacksLoaded;
             new Harmony(GUID).PatchAll();
-
+            
         }
 
         private void SL_OnPacksLoaded()
+        {
+
+        }
+
+        private void SL_BeforePacksLoaded()
         {
 
         }
@@ -149,79 +155,79 @@ namespace BossRush
             else if (Scene.name == "ChersoneseDungeonsBosses" && BossRushPlugin.activated)
             {
                 GameObject trogQueenTeleporter = GameObject.Find("Environment/Spawns/ZSpawn1/AreaSwitchQueen/Trigger");
-                if (trogQueenTeleporter != null) { altarFunctionality(trogQueenTeleporter, new Vector3(0f, 1.25f, -3.1167f), new Vector3(1.445f, 1.645f, 2.3633f), new Vector3(2.89f, 3.29f, 4.7266f)); }
+                if (trogQueenTeleporter != null) { altarFunctionality(trogQueenTeleporter, new Vector3(0f, 1.25f, -3.1167f), new Vector3(1.445f, 1.645f, 2.3633f), new Vector3(2.89f, 3.29f, 4.7266f),false); }
                 else { BossRushPlugin.Log.LogMessage($"Teleporter not found"); }
                 GameObject ShrimpTeleporter = GameObject.Find("Environment/Spawns/ZSpawn2/AreaSwitchShrimp/Trigger");
-                if (ShrimpTeleporter != null) { altarFunctionality(ShrimpTeleporter, new Vector3(0f, 1.25f, -3.58f), new Vector3(1.445f, 1.645f, 1.9f), new Vector3(2.89f, 3.29f, 3.8f)); }
+                if (ShrimpTeleporter != null) { altarFunctionality(ShrimpTeleporter, new Vector3(0f, 1.25f, -3.58f), new Vector3(1.445f, 1.645f, 1.9f), new Vector3(2.89f, 3.29f, 3.8f), false); }
                 else { BossRushPlugin.Log.LogMessage($"Teleporter not found"); }
                 GameObject SquireTeleporter = GameObject.Find("Environment/Spawns/ZSpawn3/AreaSwitchSquire/Trigger");
-                if (SquireTeleporter != null) { altarFunctionality(SquireTeleporter, new Vector3(0f, 1.25f, -2.1925f), new Vector3(1.445f, 1.645f, 3.2875f), new Vector3(2.89f, 3.29f, 6.575f)); }
+                if (SquireTeleporter != null) { altarFunctionality(SquireTeleporter, new Vector3(0f, 1.25f, -2.1925f), new Vector3(1.445f, 1.645f, 3.2875f), new Vector3(2.89f, 3.29f, 6.575f), false); }
                 else { BossRushPlugin.Log.LogMessage($"Teleporter not found"); }
             }
             else if (Scene.name == "AbrassarDungeonsBosses" && BossRushPlugin.activated)
             {
                 GameObject calixaTeleporter = GameObject.Find("Environment/Spawns/ZSpawn1/AreaSwitchCalixa/Trigger");
-                if (calixaTeleporter != null) { altarFunctionality(calixaTeleporter, new Vector3(0f, 1.25f, -3.1167f), new Vector3(1.445f, 1.645f, 2.3633f), new Vector3(2.89f, 3.29f, 4.7266f)); }
+                if (calixaTeleporter != null) { altarFunctionality(calixaTeleporter, new Vector3(0f, 1.25f, -3.1167f), new Vector3(1.445f, 1.645f, 2.3633f), new Vector3(2.89f, 3.29f, 4.7266f), false); }
                 else { BossRushPlugin.Log.LogMessage($"Teleporter not found"); }
                 GameObject golemTeleporter = GameObject.Find("Environment/Spawns/ZSpawn2/AreaSwitchGolem/Trigger");
-                if (golemTeleporter != null) { altarFunctionality(golemTeleporter, new Vector3(0f, 1.25f, -3.58f), new Vector3(1.445f, 1.645f, 1.9f), new Vector3(2.89f, 3.29f, 3.8f)); }
+                if (golemTeleporter != null) { altarFunctionality(golemTeleporter, new Vector3(0f, 1.25f, -3.58f), new Vector3(1.445f, 1.645f, 1.9f), new Vector3(2.89f, 3.29f, 3.8f), false); }
                 else { BossRushPlugin.Log.LogMessage($"Teleporter not found"); }
                 GameObject sharkTeleporter = GameObject.Find("Environment/Spawns/ZSpawn3/AreaSwitchShark/Trigger");
-                if (sharkTeleporter != null) { altarFunctionality(sharkTeleporter, new Vector3(0f, 1.25f, -3.58f), new Vector3(1.445f, 1.645f, 1.9f), new Vector3(2.89f, 3.29f, 3.8f)); }
+                if (sharkTeleporter != null) { altarFunctionality(sharkTeleporter, new Vector3(0f, 1.25f, -3.58f), new Vector3(1.445f, 1.645f, 1.9f), new Vector3(2.89f, 3.29f, 3.8f), false); }
                 else { BossRushPlugin.Log.LogMessage($"Teleporter not found"); }
             }
             else if (Scene.name == "AntiqueFieldDungeonsBosses" && BossRushPlugin.activated)
             {
                 GameObject birdTeleporter = GameObject.Find("Environment/Spawns/ZSpawn1/AreaSwitchBird/Trigger");
-                if (birdTeleporter != null) { altarFunctionality(birdTeleporter, new Vector3(-0.0687f, 1.25f, -1.3934f), new Vector3(1.1325f, 1.645f, 1.0054f), new Vector3(2.265f, 3.29f, 2.0109f)); }
+                if (birdTeleporter != null) { altarFunctionality(birdTeleporter, new Vector3(-0.0687f, 1.25f, -1.3934f), new Vector3(1.1325f, 1.645f, 1.0054f), new Vector3(2.265f, 3.29f, 2.0109f), false); }
                 else { BossRushPlugin.Log.LogMessage($"Teleporter not found"); }
                 GameObject sublimeTeleporter = GameObject.Find("Environment/Spawns/ZSpawn2/AreaSwitchOpulence/Trigger");
-                if (sublimeTeleporter != null) { altarFunctionality(sublimeTeleporter, new Vector3(0f, 1.25f, -4.23f), new Vector3(1.445f, 1.645f, 1.25f), new Vector3(2.89f, 3.29f, 2.5f)); }
+                if (sublimeTeleporter != null) { altarFunctionality(sublimeTeleporter, new Vector3(0f, 1.25f, -4.23f), new Vector3(1.445f, 1.645f, 1.25f), new Vector3(2.89f, 3.29f, 2.5f), false); }
                 else { BossRushPlugin.Log.LogMessage($"Teleporter not found"); }
                 GameObject boozuTeleporter = GameObject.Find("Environment/Spawns/ZSpawn3/AreaSwitchBoozu/Trigger");
-                if (boozuTeleporter != null) { altarFunctionality(boozuTeleporter, new Vector3(0.0824f, 1.25f, -3.2298f), new Vector3(1.5274f, 1.645f, 1.7033f), new Vector3(3.0547f, 3.29f, 3.4066f)); }
+                if (boozuTeleporter != null) { altarFunctionality(boozuTeleporter, new Vector3(0.0824f, 1.25f, -3.2298f), new Vector3(1.5274f, 1.645f, 1.7033f), new Vector3(3.0547f, 3.29f, 3.4066f), false); }
                 else { BossRushPlugin.Log.LogMessage($"Teleporter not found"); }
             }
             else if (Scene.name == "EmercarDungeonsBosses" && BossRushPlugin.activated)
             {
                 GameObject lichTeleporter = GameObject.Find("Environment/Spawns/ZSpawn1/AreaSwitchLiches/Trigger");
-                if (lichTeleporter != null) { altarFunctionality(lichTeleporter, new Vector3(0f, 1.25f, -3.58f), new Vector3(1.445f, 1.645f, 1.9f), new Vector3(2.89f, 3.29f, 3.8f)); }
+                if (lichTeleporter != null) { altarFunctionality(lichTeleporter, new Vector3(0f, 1.25f, -3.58f), new Vector3(1.445f, 1.645f, 1.9f), new Vector3(2.89f, 3.29f, 3.8f), false); }
                 else { BossRushPlugin.Log.LogMessage($"Teleporter not found"); }
                 GameObject burningTeleporter = GameObject.Find("Environment/Spawns/ZSpawn2/AreaSwitchBurnBob/Trigger");
-                if (burningTeleporter != null) { altarFunctionality(burningTeleporter, new Vector3(0f, 1.25f, -3.58f), new Vector3(1.445f, 1.645f, 1.9f), new Vector3(2.89f, 3.29f, 3.8f)); }
+                if (burningTeleporter != null) { altarFunctionality(burningTeleporter, new Vector3(0f, 1.25f, -3.58f), new Vector3(1.445f, 1.645f, 1.9f), new Vector3(2.89f, 3.29f, 3.8f), false); }
                 else { BossRushPlugin.Log.LogMessage($"Teleporter not found"); }
                 GameObject immaculateTeleporter = GameObject.Find("Environment/Spawns/ZSpawn3/AreaSwitchImmaculate/Trigger");
-                if (immaculateTeleporter != null) { altarFunctionality(immaculateTeleporter, new Vector3(0, 1.25f, -3.58f), new Vector3(1.445f, 1.645f, 1.9f), new Vector3(2.89f, 3.29f, 3.8f)); }
+                if (immaculateTeleporter != null) { altarFunctionality(immaculateTeleporter, new Vector3(0, 1.25f, -3.58f), new Vector3(1.445f, 1.645f, 1.9f), new Vector3(2.89f, 3.29f, 3.8f), false); }
                 else { BossRushPlugin.Log.LogMessage($"Teleporter not found"); }
             }
             else if (Scene.name == "HallowedDungeonsBosses" && BossRushPlugin.activated)
             {
                 GameObject priestTeleporter = GameObject.Find("Environment/Spawns/ZSpawn1/AreaSwitchPriest/Trigger");
-                if (priestTeleporter != null) { altarFunctionality(priestTeleporter, new Vector3(0f, 1.25f, -3.58f), new Vector3(1.445f, 1.645f, 1.9f), new Vector3(2.89f, 3.29f, 3.8f)); }
+                if (priestTeleporter != null) { altarFunctionality(priestTeleporter, new Vector3(0f, 1.25f, -3.58f), new Vector3(1.445f, 1.645f, 1.9f), new Vector3(2.89f, 3.29f, 3.8f), false); }
                 else { BossRushPlugin.Log.LogMessage($"Teleporter not found"); }
                 GameObject giantTeleporter = GameObject.Find("Environment/Spawns/ZSpawn2/AreaSwitchGiant/Trigger");
-                if (giantTeleporter != null) { altarFunctionality(giantTeleporter, new Vector3(0f, 1.25f, -3.58f), new Vector3(1.445f, 1.645f, 1.9f), new Vector3(2.89f, 3.29f, 3.8f)); }
+                if (giantTeleporter != null) { altarFunctionality(giantTeleporter, new Vector3(0f, 1.25f, -3.58f), new Vector3(1.445f, 1.645f, 1.9f), new Vector3(2.89f, 3.29f, 3.8f), false); }
                 else { BossRushPlugin.Log.LogMessage($"Teleporter not found"); }
                 GameObject tuanoTeleporter = GameObject.Find("Environment/Spawns/ZSpawn3/AreaSwitchTuano/Trigger");
-                if (tuanoTeleporter != null) { altarFunctionality(tuanoTeleporter, new Vector3(0, 1.25f, -3.58f), new Vector3(1.445f, 1.645f, 1.9f), new Vector3(2.89f, 3.29f, 3.8f)); }
+                if (tuanoTeleporter != null) { altarFunctionality(tuanoTeleporter, new Vector3(0, 1.25f, -3.58f), new Vector3(1.445f, 1.645f, 1.9f), new Vector3(2.89f, 3.29f, 3.8f), false); }
                 else { BossRushPlugin.Log.LogMessage($"Teleporter not found"); }
             }
             else if (Scene.name == "CalderaDungeonsBosses" && BossRushPlugin.activated)
             {
                 GameObject grandmotherTeleporter = GameObject.Find("Environment/AreaSwitches/AreaSwitch_GrandMother/Trigger");
-                if (grandmotherTeleporter != null) { altarFunctionality(grandmotherTeleporter, new Vector3(-0.1121f, 0.3876f, 0.3471f), new Vector3(1.575f, 0.8876f, 0.847f), new Vector3(3.1499f, 1.7752f, 1.6941f)); }
+                if (grandmotherTeleporter != null) { altarFunctionality(grandmotherTeleporter, new Vector3(-0.1121f, 0.3876f, 0.3471f), new Vector3(1.575f, 0.8876f, 0.847f), new Vector3(3.1499f, 1.7752f, 1.6941f), false); }
                 else { BossRushPlugin.Log.LogMessage($"Teleporter not found"); }
                 GameObject torcrabTeleporter = GameObject.Find("Environment/AreaSwitches/AreaSwitch_TorcrabFireIce/Trigger");
-                if (torcrabTeleporter != null) { altarFunctionality(torcrabTeleporter, new Vector3(0.184f, 0.5281f, -1.5924f), new Vector3(1.554f, 1.0281f, 3.2116f), new Vector3(3.1079f, 2.0563f, 6.4233f)); }
+                if (torcrabTeleporter != null) { altarFunctionality(torcrabTeleporter, new Vector3(0.184f, 0.5281f, -1.5924f), new Vector3(1.554f, 1.0281f, 3.2116f), new Vector3(3.1079f, 2.0563f, 6.4233f), false); }
                 else { BossRushPlugin.Log.LogMessage($"Teleporter not found"); }
                 GameObject gargoyleTeleporter = GameObject.Find("Interactions/Caldera_Bosses/InteractionGargoylesBosses/prf_env_gargoyleFake/"); //WORKAROUND WORKS
-                if (gargoyleTeleporter != null) { altarFunctionality(gargoyleTeleporter, new Vector3(-0.0546f, 0.1773f, -0.4812f), new Vector3(1.645f, 0.7258f, 1.3162f), new Vector3(3.2899f, 1.4516f, 2.6323f)); }
+                if (gargoyleTeleporter != null) { altarFunctionality(gargoyleTeleporter, new Vector3(-0.0546f, 0.1773f, -0.4812f), new Vector3(1.645f, 0.7258f, 1.3162f), new Vector3(3.2899f, 1.4516f, 2.6323f), false); }
                 else { BossRushPlugin.Log.LogMessage($"Teleporter not found"); }
                 GameObject gargoyleDenyTeleporter = GameObject.Find("Environment/AreaSwitches/AreaSwitch_Gargoyles/Trigger");  //WORKAROUND WORKS
                 if (gargoyleDenyTeleporter != null) { altarFunctionalityDeny(gargoyleDenyTeleporter); }
                 else { BossRushPlugin.Log.LogMessage($"Teleporter not found"); }
                 GameObject crimsonTeleporter = GameObject.Find("Environment/AreaSwitches/AreaSwitch_CrimsoneElite/Trigger");
-                if (crimsonTeleporter != null) { altarFunctionality(crimsonTeleporter, new Vector3(0.1079f, -0.7207f, 0.2016f), new Vector3(1.0021f, 1.2207f, 0.7016f), new Vector3(2.0042f, 2.4414f, 1.4032f)); }
+                if (crimsonTeleporter != null) { altarFunctionality(crimsonTeleporter, new Vector3(0.1079f, -0.7207f, 0.2016f), new Vector3(1.0021f, 1.2207f, 0.7016f), new Vector3(2.0042f, 2.4414f, 1.4032f), false); }
                 else { BossRushPlugin.Log.LogMessage($"Teleporter not found"); }
             }
 
@@ -342,7 +348,26 @@ namespace BossRush
                 BossRushPlugin.Log.LogMessage($"Parent is null");
             }
             return null;
+        }
 
+        static GameObject FindChildContains(GameObject parent, string name)
+        {
+            if (parent != null)
+            {
+                foreach (Transform child in parent.transform)
+                {
+                    if (child.name.Contains(name))
+                    {
+                        return child.gameObject;
+                    }
+                }
+                BossRushPlugin.Log.LogMessage($"Child with name {name} not found under {parent.name}");
+            }
+            else
+            {
+                BossRushPlugin.Log.LogMessage($"Parent is null");
+            }
+            return null;
         }
 
         static void PrintAllChildren(GameObject parent)
@@ -660,7 +685,7 @@ namespace BossRush
                     // Adding functionality to the altar
                     if (pot != null)
                     {
-                        altarFunctionality(pot, new Vector3(0.0615f, 1.4725f, -0.0576f), new Vector3(1.5f, 1.5215f, 1.5f), new Vector3(4f, 4.0429f, 4));
+                        altarFunctionality(pot, new Vector3(0.0615f, 1.4725f, -0.0576f), new Vector3(1.5f, 1.5215f, 1.5f), new Vector3(4f, 4.0429f, 4), true);
                     }
 
                     // Adding VFX for the pot
@@ -673,7 +698,7 @@ namespace BossRush
         }
 
 
-        public static void altarFunctionality(GameObject gameObject, Vector3 centerIn, Vector3 extentsIn, Vector3 sizeIn)
+        public static void altarFunctionality(GameObject gameObject, Vector3 centerIn, Vector3 extentsIn, Vector3 sizeIn, bool offerItemText)
         {
             if (gameObject != null)
             {                
@@ -709,6 +734,14 @@ namespace BossRush
                 functionality = gameObject.AddComponent<InteractionFunctionality>();
                 activator.AutoTogglePauseTime = 0.5f;
                 activator.BasicInteraction = functionality;
+                if (offerItemText == true)
+                {
+                    activator.m_overrideBasicText = "Offer Item";
+                }
+                else
+                {
+                    activator.m_overrideBasicText = "Interact";
+                }                
             }
         }
 
@@ -728,24 +761,63 @@ namespace BossRush
                 GameObject fireOnAltarOrg = GameObject.Find("JOHBENJI_DLC/altar/fire");
                 if (activated)
                 {
-                    GameObject fireRef = GameObject.Find("Environment/Assets/FX/Prefab_fx_fire1x3Far/SmokeVolumetric");
-                    if (fireRef != null)
+                    GameObject fireParentRef = GameObject.Find("Environment/Assets/FX/Prefab_fx_fire1x3Far");
+                    if (fireParentRef != null)
                     {
-                        GameObject fire = GameObject.Instantiate(fireRef);
-                        fire.name = "fire";
-                        fire.transform.parent = altar.transform;
-                        fire.transform.localPosition = new Vector3(0f, 1.4f, -0.04f);
-                        ParticleSystem particleSystem = fire.GetComponent<ParticleSystem>();
-                        ParticleSystemRenderer particleRenderer = fire.GetComponent<ParticleSystemRenderer>();
-                        if (particleSystem != null && particleRenderer != null)
+                        GameObject fire = GameObject.Instantiate(fireParentRef);
+                        if (fire != null)
                         {
-                            particleRenderer.maxParticleSize = 0.06f;
-                            particleSystem.emissionRate = 25f;
-                            particleSystem.startColor = new Color(0.2604f, 0.2604f, 0.6039f, 1f);
-                            ParticleSystem.ShapeModule shapeModule = particleSystem.shape;
-                            shapeModule.box = new Vector3(0.1f, 0.1f, 0.1f);
-                        }                                                                      
-                    }
+                            fire.name = "fire";
+                            fire.transform.parent = altar.transform;   
+                            fire.transform.localPosition = new Vector3(-0.3f, 0.6f, 0.02f);
+
+                            GameObject smoke = FindChild(fire, "SmokeVolumetric");
+                            GameObject light = FindChild(fire, "Bonfire Point light");
+                            GameObject fireEffect = FindChild(fire, "FireFar");
+                            if (smoke != null)
+                            {                                
+                                ParticleSystem smokePS = smoke.GetComponent<ParticleSystem>();
+                                if (smokePS != null)
+                                {
+                                    smokePS.scalingMode = UnityEngine.ParticleSystemScalingMode.Local;                                    
+                                }
+                                smoke.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                                smoke.SetActive(true);
+                            }
+                            if (fireEffect != null)
+                            {                                
+                                ParticleSystem fireEffectPS = fireEffect.GetComponent<ParticleSystem>();
+                                if (fireEffectPS != null)
+                                {                                    
+                                    fireEffectPS.emissionRate = 25f;
+                                    fireEffectPS.startColor = new Color(0.05f, 0.035f, 1f, 1f);
+                                    fireEffectPS.scalingMode = UnityEngine.ParticleSystemScalingMode.Local;
+                                }                                
+                                fireEffect.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                                fireEffect.SetActive(true);
+                            }
+                            if (light != null)
+                            {                                                                
+                                Light lightLight = light.GetComponent<Light>();
+                                if (lightLight != null)
+                                {
+                                    lightLight.color = new Color(0.8f, 0.8f, 1f, 1f);
+                                    lightLight.range = 5f;
+                                }
+                                light.transform.localPosition = new Vector3(0, 0, 0);
+                                light.SetActive(true);
+                            }
+                            GameObject pot = FindChildContains(altar, "pot");
+                            if (pot != null) 
+                            {
+                                InteractionActivator activator = pot.GetComponent<InteractionActivator>();
+                                if (activator != null)
+                                {
+                                    activator.m_overrideBasicText = "Inhale Fumes";
+                                }                                
+                            }
+                        }
+                    }                    
                 }
             }
         }

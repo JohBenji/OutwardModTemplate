@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using SideLoader;
 using UnityEngine;
 
+
 namespace BossRush
 {
     public class Chests
@@ -36,6 +37,8 @@ namespace BossRush
         private List<string> highmonkDroptableUIDs;
         private List<string> tuanosaurDroptableUIDs;
 
+        private int iterationNumber = 0;
+
         public void initiateChests()
         {
             sharksDroptableUIDs = new List<string>();
@@ -61,9 +64,16 @@ namespace BossRush
 
         public void ApplyTemplate(string sceneName, Vector3 spawnPosition, Vector3 spawnRotation, List<string> droptableUIDs)
         {
-            SL_ItemContainerSpawn itemcontainer = new SL_ItemContainerSpawn()
+            BossRushPlugin.Log.LogMessage($"For '{sceneName}_{(int)spawnPosition.magnitude}_{(int)spawnRotation.magnitude}':");
+            foreach (string uid in droptableUIDs)
             {
-                IdentifierName = $"{sceneName}_{(int)spawnPosition.magnitude}_{(int)spawnRotation.magnitude}",
+                BossRushPlugin.Log.LogMessage($"Adding UID: {uid}");
+            }
+            BossRushPlugin.Log.LogMessage($"Applying template");
+
+            new SL_ItemContainerSpawn()
+            {
+                IdentifierName = $"{sceneName}_{(int)spawnPosition.magnitude}_{(int)spawnRotation.magnitude}_{string.Concat(new System.Random().Next(0, 100000000).ToString("D8"))}",
                 ItemID = 1000040,
                 Quantity = 1,
                 SceneToSpawnIn = sceneName,
@@ -73,20 +83,13 @@ namespace BossRush
                 TryLightFueledContainer = true,
                 SL_DropTableUIDs = droptableUIDs,
                 HoursForDropRegeneration = 0
-            };
-            itemcontainer.ApplyTemplate();
-            BossRushPlugin.Log.LogMessage($"For '{sceneName}_{(int)spawnPosition.magnitude}_{(int)spawnRotation.magnitude}':");
-            foreach (string uid in droptableUIDs)
-            {
-                BossRushPlugin.Log.LogMessage($"Adding UID: {uid}");
-            }
-            BossRushPlugin.Log.LogMessage($"Applying template");
+            }.ApplyTemplate();
         }
         
         public void ApplyChests()
         {
-            BossRushPlugin.Log.LogMessage("Applying chests...");
-
+            BossRushPlugin.Log.LogMessage($"Applying chests... iteration number {iterationNumber}");
+            iterationNumber = iterationNumber + 1;
             ApplyTemplate("AbrassarDungeonsBosses",new Vector3(605.782f, 1.0346f, 35.6858f),new Vector3(0f,206f,0f), sharksDroptableUIDs); // Sharks
             ApplyTemplate("AbrassarDungeonsBosses", new Vector3(39.7859f, 0.2242f, -4.6284f), new Vector3(0f, 306f, 0f), calixaDroptableUIDs); // Calixa
             ApplyTemplate("AbrassarDungeonsBosses", new Vector3(304.856f, 1.0158f, 24.9473f), new Vector3(0f, 206f, 0f), beastDroptableUIDs); // Beast
