@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<SL_BossRushDropTable xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <UID />
+  <GuaranteedDrops />
+  <RandomTables />
+  <TypeOfBossRushDropTable>None</TypeOfBossRushDropTable>
+  <SpecificChestLootTarget>None</SpecificChestLootTarget>
+</SL_BossRushDropTable>

@@ -779,9 +779,13 @@ namespace BossRush
                                 ParticleSystem smokePS = smoke.GetComponent<ParticleSystem>();
                                 if (smokePS != null)
                                 {
-                                    smokePS.scalingMode = UnityEngine.ParticleSystemScalingMode.Local;                                    
+                                    smokePS.scalingMode = UnityEngine.ParticleSystemScalingMode.Local;
+                                    smokePS.playbackSpeed = 0.8f;
+                                    var shapeSmoke = smokePS.shape;
+                                    shapeSmoke.box = new Vector3(0.1f,0.1f,0.1f);
                                 }
-                                smoke.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                                smoke.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+                                smoke.transform.localPosition = new Vector3(0.4f, 0f, 0f);                                
                                 smoke.SetActive(true);
                             }
                             if (fireEffect != null)

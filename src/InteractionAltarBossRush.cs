@@ -77,6 +77,30 @@ namespace BossRush
                             {                                
                                 Animator animator = _character.Animator;                                
                                 animator.Play("Death Indirect");
+
+                                List<GlobalAudioManager.Sounds> soundList = new List<GlobalAudioManager.Sounds>();
+                                if (_character.Sex == Character.Gender.Male)
+                                {
+                                    soundList.Add(GlobalAudioManager.Sounds.CS_Human_Hurt_Grunt1);
+                                    soundList.Add(GlobalAudioManager.Sounds.CS_Human_Hurt_Grunt1);
+                                    soundList.Add(GlobalAudioManager.Sounds.CS_Human_Hurt_Grunt2);
+                                    soundList.Add(GlobalAudioManager.Sounds.CS_Human_Hurt_Grunt3);
+                                    soundList.Add(GlobalAudioManager.Sounds.CS_Human_Hurt_Grunt4);
+                                    soundList.Add(GlobalAudioManager.Sounds.CS_Human_Hurt_Grunt7);
+                                    soundList.Add(GlobalAudioManager.Sounds.CS_Human_HeavyHurt_Grunt5);
+                                    soundList.Add(GlobalAudioManager.Sounds.CS_Human_HeavyHurt_Grunt7);
+                                }
+                                else if (_character.Sex == Character.Gender.Female)
+                                {
+                                    soundList.Add(GlobalAudioManager.Sounds.CS_FemaleCharactersHeavyHurt02);
+                                    soundList.Add(GlobalAudioManager.Sounds.CS_FemaleCharactersHeavyHurt03);
+                                }
+                                else 
+                                {
+                                    soundList.Add(GlobalAudioManager.Sounds.CS_Troglodyte_Hurt_Grount1);
+                                }
+                                soundList = soundList.OrderBy(x => UnityEngine.Random.value).ToList();
+                                PlaySound(soundList[0]);
                                 BossRushPlugin.delayTeleport(_character);                                                                
                             }                            
                         }
