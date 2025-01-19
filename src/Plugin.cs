@@ -20,6 +20,7 @@ using UnityEngine.TextCore;
 using static MapMagic.Erosion;
 using static UnityEngine.UIElements.UIRAtlasAllocator;
 using System.Diagnostics;
+using System.Data.Common;
 
 // RENAME 'OutwardModTemplate' TO SOMETHING ELSE
 namespace BossRush
@@ -71,6 +72,8 @@ namespace BossRush
             chests = new Chests();
             chests.initiateChests();
             BossRushManager = new BossRushManager();
+            chests.Apply();
+
             portalManager = new PortalManager();
             
             ConfigElements.Init(base.Config);
@@ -82,8 +85,34 @@ namespace BossRush
         }
 
         private void SL_OnPacksLoaded()
-        {
+        {                       
+            new SL_ItemContainerSpawn()
+            {
+                IdentifierName = "TestChest",
+                ItemID = 1000040,
+                Quantity = 1,
+                SceneToSpawnIn = "Berg",                 
+                SpawnPosition = new Vector3(1202.671f, -14.0705f, 1380.572f),
+                SpawnRotation = new Vector3(0f, 0f, 0f),
+                ForceNonPickable = true,
+                TryLightFueledContainer = true,
+                SL_DropTableUIDs = new List<string> { "DT_JBBOSSRUSH" },
+                HoursForDropRegeneration = 0
+            }.ApplyTemplate();
 
+            new SL_ItemContainerSpawn()
+            {
+                IdentifierName = "TestChest2",
+                ItemID = 1000040,
+                Quantity = 1,
+                SceneToSpawnIn = "Berg",
+                SpawnPosition = new Vector3(1202.671f, -14.0705f, 1384.572f),
+                SpawnRotation = new Vector3(0f, 0f, 0f),
+                ForceNonPickable = true,
+                TryLightFueledContainer = true,
+                SL_DropTableUIDs = new List<string> { "DT_JBBOSSRUSH" },
+                HoursForDropRegeneration = 0
+            }.ApplyTemplate();
         }
 
         private void SL_BeforePacksLoaded()
