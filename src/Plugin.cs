@@ -135,55 +135,26 @@ namespace BossRush
                     if (___AreaName == "Emercar")
                     {
                         BossRushPlugin.Log.LogMessage("Harmony Patch: RegionRefresh");
-                        BossRushPlugin.activated = false;
-                        BossRushPlugin.rewardReq1 = false;
-                        BossRushPlugin.rewardReq2 = false;
+                        resetBossRush();
                     }
                 }                
             }
         }
 
+        [HarmonyPatch(typeof(DefeatScenariosManager), nameof(DefeatScenariosManager.ActivateDefeatScenario))]
+        class resetBossRushSession
+        {
+            static void Postfix()
+            {
+                resetBossRush();
+            }
+        }
 
         internal void SceneManager_sceneLoaded(Scene Scene, LoadSceneMode LoadMode)
         {            
             if (Scene.name == "Emercar")
             {
-                GameObject sceneholder = new GameObject();
-                sceneholder.name = "JOHBENJI_DLC";
-                BossRushPlugin.Log.LogMessage("Scene Found");
-                // Find tree gameobject
-                sceneholder.transform.position = new Vector3((float)855.2936, (float)-11.3909, (float)1589.459); ;
-                if (GameObject.Find("CentralTreeBossRush") == null)
-                {
-                    GameObject StolenTree = GameObject.Find("Environment/Assets/Foliage/Tree/mdl_env_treeKapokBergB (29)");
-                    if (StolenTree != null)
-                    {
-                        GameObject newTree = GameObject.Instantiate(StolenTree);
-                        newTree.transform.parent = sceneholder.transform;
-                        newTree.name = "CentralTreeBossRush";
-                        Vector3 newTreeLocPos = new Vector3((float)0, (float)0, (float)0);
-                        Vector3 newTreeSca = new Vector3((float)0.1, (float)0.1, (float)0.1);
-                        Transform newTreeTransform = newTree.transform;
-                        newTreeTransform.localPosition = newTreeLocPos;
-                        newTreeTransform.localScale = newTreeSca;
-                        GameObject tree_kapokBergB = FindChild(newTree, "tree_kapokBergB");
-
-                        // Remove the gathering component
-                        CentralGatherableAccessPoint gatherComp = newTree.GetComponent<CentralGatherableAccessPoint>();
-                        if (gatherComp != null) { Destroy(gatherComp); }
-
-                        // Fix the tree
-                        fixTreeColorVisuals(tree_kapokBergB);
-                        fixTreeVFX(newTree);
-
-                        // Add the altar
-                        addAltar(sceneholder);
-                    }
-                }
-                else
-                {
-                    BossRushPlugin.Log.LogMessage("Tree not found.");
-                }
+                setupBossRush();
             }
             else if (Scene.name == "ChersoneseDungeonsBosses" && BossRushPlugin.activated)
             {
@@ -284,6 +255,88 @@ namespace BossRush
                     BossRushPlugin.rewardReq2 = false;
                 }
             }
+        }
+
+        private static void setupBossRush()
+        {
+            GameObject sceneholder = new GameObject();
+            sceneholder.name = "JOHBENJI_DLC";
+            BossRushPlugin.Log.LogMessage("Scene Found");
+            // Find tree gameobject
+            sceneholder.transform.position = new Vector3((float)855.2936, (float)-11.3909, (float)1589.459); ;
+            if (GameObject.Find("CentralTreeBossRush") == null)
+            {
+                GameObject StolenTree = GameObject.Find("Environment/Assets/Foliage/Tree/mdl_env_treeKapokBergB (29)");
+                if (StolenTree != null)
+                {
+                    GameObject newTree = GameObject.Instantiate(StolenTree);
+                    newTree.transform.parent = sceneholder.transform;
+                    newTree.name = "CentralTreeBossRush";
+                    Vector3 newTreeLocPos = new Vector3((float)0, (float)0, (float)0);
+                    Vector3 newTreeSca = new Vector3((float)0.1, (float)0.1, (float)0.1);
+                    Transform newTreeTransform = newTree.transform;
+                    newTreeTransform.localPosition = newTreeLocPos;
+                    newTreeTransform.localScale = newTreeSca;
+                    GameObject tree_kapokBergB = FindChild(newTree, "tree_kapokBergB");
+
+                    // Remove the gathering component
+                    CentralGatherableAccessPoint gatherComp = newTree.GetComponent<CentralGatherableAccessPoint>();
+                    if (gatherComp != null) { Destroy(gatherComp); }
+
+                    // Fix the tree
+                    fixTreeColorVisuals(tree_kapokBergB);
+                    fixTreeVFX(newTree);
+
+                    // Add the altar
+                    addAltar(sceneholder);
+                }
+            }
+            else if (GameObject.Find("CentralTreeBossRush") != null && !activated)
+            {
+                /*
+                 * Purpose:
+                 * Resets the tree's visuals including the altar state
+                 */
+                GameObject treeWhichNeedsDeleting = GameObject.Find("CentralTreeBossRush");
+                Destroy(treeWhichNeedsDeleting);
+
+                GameObject StolenTree = GameObject.Find("Environment/Assets/Foliage/Tree/mdl_env_treeKapokBergB (29)");
+                if (StolenTree != null)
+                {
+                    GameObject newTree = GameObject.Instantiate(StolenTree);
+                    newTree.transform.parent = sceneholder.transform;
+                    newTree.name = "CentralTreeBossRush";
+                    Vector3 newTreeLocPos = new Vector3((float)0, (float)0, (float)0);
+                    Vector3 newTreeSca = new Vector3((float)0.1, (float)0.1, (float)0.1);
+                    Transform newTreeTransform = newTree.transform;
+                    newTreeTransform.localPosition = newTreeLocPos;
+                    newTreeTransform.localScale = newTreeSca;
+                    GameObject tree_kapokBergB = FindChild(newTree, "tree_kapokBergB");
+
+                    // Remove the gathering component
+                    CentralGatherableAccessPoint gatherComp = newTree.GetComponent<CentralGatherableAccessPoint>();
+                    if (gatherComp != null) { Destroy(gatherComp); }
+
+                    // Fix the tree
+                    fixTreeColorVisuals(tree_kapokBergB);
+                    fixTreeVFX(newTree);
+
+                    // Add the altar
+                    addAltar(sceneholder);
+                }
+            }
+            else
+            {
+                BossRushPlugin.Log.LogMessage("Tree not found.");
+            }
+        }
+
+        private static void resetBossRush()
+        {
+            BossRushPlugin.Log.LogMessage("Resetting boss rush.");
+            BossRushPlugin.activated = false;
+            BossRushPlugin.rewardReq1 = false;
+            BossRushPlugin.rewardReq2 = false;
         }
 
         private IEnumerator DelayedProgressDisplay()
