@@ -71,8 +71,8 @@ namespace BossRush
             //create a new instance of the class calls the constructor which calls FindXMLDefinitions
             chests = new Chests();
             chests.initiateChests();
-            BossRushManager = new BossRushManager();
-            chests.Apply();
+            BossRushManager = new BossRushManager(); // Loading the data for the chests
+            chests.Apply(); // Applying the chests with the loot data
 
             portalManager = new PortalManager();
             
@@ -85,7 +85,11 @@ namespace BossRush
         }
 
         private void SL_OnPacksLoaded()
-        {                       
+        {    
+            /*
+             * Purpose:
+             * Testing if SL_ItemContainerSpawn works. The results seem to indicate that these work fine without any problem.
+             */
             new SL_ItemContainerSpawn()
             {
                 IdentifierName = "TestChest",

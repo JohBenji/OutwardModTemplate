@@ -12,13 +12,19 @@ namespace BossRush
 {
     public class Chests
     {
-        private int iterationNumber = 0;
-
+        /*
+         * Purpose:
+         * The purpose of this class is to create chests at the end of Unknown Arena Bosses. The droptable data is sent from the BossRushManager.cs and stored here.
+         */
         public Dictionary<BossSelectionEnum, BossContainerData> chestDictionary;
         private bool applied = false;
 
         public void initiateChests()
         {
+            /*
+             * Purpose:
+             * Inserting the default information for a particular boss such as: Scene name, position of the chest, rotation of the chest, and an empty list of strings which will be populated to DropTableUIDs.
+             */
             chestDictionary = new Dictionary<BossSelectionEnum, BossContainerData>();
             chestDictionary.Add(BossSelectionEnum.Elite_Crescent_Sharks, new BossContainerData("AbrassarDungeonsBosses", new Vector3(605.782f, 1.0346f, 35.6858f), new Vector3(0f, 206f, 0f), new List<string>()));
             chestDictionary.Add(BossSelectionEnum.Calixa, new BossContainerData("AbrassarDungeonsBosses", new Vector3(39.7859f, 0.2242f, -4.6284f), new Vector3(0f, 306f, 0f), new List<string>()));
@@ -43,7 +49,11 @@ namespace BossRush
         }
 
         private void ApplyTemplateChest(BossSelectionEnum boss, BossContainerData bossContainerData)
-        {            
+        {
+            /*
+             * Purpose:
+             * Creates the chest based using the dictionary key and value.
+             */
             new SL_ItemContainerSpawn()
             {
                 IdentifierName = $"{boss.ToString()}_Chest",
@@ -61,8 +71,12 @@ namespace BossRush
 
         public void Apply() 
         {
+            /*
+             * Purpose:
+             * Applies all the dictionary keys and values to create chests. Is only run once.            
+             */
             if (!applied) 
-            {
+            {                
                 foreach (var boss in chestDictionary)
                 {
                     ApplyTemplateChest(boss.Key, boss.Value);
@@ -73,6 +87,10 @@ namespace BossRush
 
         public void AddDropTable(BossSelectionEnum targetboss, string bossRushDropTableUID)
         {
+            /*
+             * Purpose:
+             * Adds a droptableUID to the target boss. This is the method for appending more droptables to the chests using DropTableUID (identifier string of a BossRushDropTable).
+             */
             BossRushPlugin.Log.LogMessage($"Testing AddDropTable");
             if (chestDictionary != null) 
             {
@@ -106,6 +124,10 @@ namespace BossRush
 
         public void AddDropTableToAll(string bossRushDropTableUID)
         {
+            /*
+             * Purpose:
+             * Same as AddDropTable but does it to all the unknown arena bosses.
+             */
             AddDropTable(BossSelectionEnum.Elite_Crescent_Sharks, bossRushDropTableUID);
             AddDropTable(BossSelectionEnum.Calixa, bossRushDropTableUID);
             AddDropTable(BossSelectionEnum.Elite_Beast_Golem, bossRushDropTableUID);
@@ -130,6 +152,10 @@ namespace BossRush
 
     public struct BossContainerData
     {
+        /*
+         * Purpose:
+         * Contains all the information relevant for contructing a chest using SL_ItemContainerSpawn.
+         */
         public string Scene;
         public Vector3 position;
         public Vector3 rotation;

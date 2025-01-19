@@ -29,6 +29,10 @@ namespace BossRush
 
         private void FindXMLDefinitions()
         {
+            /*
+             * Purpose:
+             * Gets the XML, deserializes them into classes, and sends them to the Chest class.
+             */
             BossRush.BossRushPlugin.Log.LogMessage($"FindXMLDefinitions");
             string[] directoriesInPluginsFolder = Directory.GetDirectories(Paths.PluginPath);
             foreach (var directory in directoriesInPluginsFolder)
@@ -40,13 +44,10 @@ namespace BossRush
                     string[] filePaths = Directory.GetFiles(path, "*.xml", SearchOption.AllDirectories);
                     foreach (var item in filePaths)
                     {
-                        BossRush.BossRushPlugin.Log.LogMessage($"Checking if item is of the correct type...");
                         Type sl_fileType = SideLoader.Serializer.GetBaseTypeOfXmlDocument(item);                        
                         if (sl_fileType.Name == "SL_BossRushDropTable")
                         {
-                            BossRush.BossRushPlugin.Log.LogMessage($"Deserializing:");
                             SL_BossRushDropTable bossRushDropDataListItem = DeserializeFromXML<SL_BossRushDropTable>(item);
-                            BossRush.BossRushPlugin.Log.LogMessage($"Deserializing, UID: {bossRushDropDataListItem.UID}");
                             //if its not null it deserialized correctly (is the correct type, exists etc)
                             if (bossRushDropDataListItem != null)
                             {
@@ -56,16 +57,15 @@ namespace BossRush
                                     {
                                         if (bossRushDropDataListItem.TypeOfBossRushDropTable == BossRushDropTableType.CommonChestLoot)
                                         {
-                                            // CURRENTLY (1/6/2025): Testing the droptable/itemspawn system. It adds the UID correctly but the itemspawn does not put the items in the chest. The chest spawns though.
+                                            // Adds the droptable to all chests
                                             BossRushPlugin.chests.AddDropTableToAll(bossRushDropDataListItem.UID);
                                         }
 
                                         if (bossRushDropDataListItem.TypeOfBossRushDropTable == BossRushDropTableType.SpecificChestLoot)
-                                        {
-                                            // The OptionalString is used to target the correct item / itemcontainer (chest). Could be an 'int' for targetting itemID, or 'string' for the itemspawncontainer identifier.
+                                        {                                            
                                             if (bossRushDropDataListItem.SpecificChestLootTarget != BossSelectionEnum.None)
                                             {
-
+                                                // Adds the droptable to a particular chest
                                                 if (bossRushDropDataListItem.SpecificChestLootTarget == BossSelectionEnum.Elite_Crescent_Sharks) { BossRushPlugin.chests.AddDropTable(BossSelectionEnum.Elite_Crescent_Sharks, bossRushDropDataListItem.UID); }
                                                 else if (bossRushDropDataListItem.SpecificChestLootTarget == BossSelectionEnum.Calixa) { BossRushPlugin.chests.AddDropTable(BossSelectionEnum.Calixa, bossRushDropDataListItem.UID); }
                                                 else if (bossRushDropDataListItem.SpecificChestLootTarget == BossSelectionEnum.Elite_Beast_Golem) { BossRushPlugin.chests.AddDropTable(BossSelectionEnum.Elite_Beast_Golem, bossRushDropDataListItem.UID); }
@@ -88,7 +88,7 @@ namespace BossRush
                                             }
                                             else
                                             {
-                                                BossRushPlugin.Log.LogMessage("Optional string emptty. The optional string must contain the name of the boss");
+                                                BossRushPlugin.Log.LogMessage("None is selected as a SpecificChestLootTarget for 'BossRushDropTableType.SpecificChestLoot'. It is not able to target a specific chest.");
                                             }
                                         }
                                         if (bossRushDropDataListItem.TypeOfBossRushDropTable == BossRushDropTableType.BossRushCompletion)
