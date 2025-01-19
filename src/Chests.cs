@@ -23,7 +23,7 @@ namespace BossRush
         {
             /*
              * Purpose:
-             * Inserting the default information for a particular boss such as: Scene name, position of the chest, rotation of the chest, and an empty list of strings which will be populated to DropTableUIDs.
+             * Inserting the default information for a particular boss such as: Scene name, position of the chest, rotation of the chest, and an empty list of strings which will be populated with DropTableUIDs.
              */
             chestDictionary = new Dictionary<BossSelectionEnum, BossContainerData>();
             chestDictionary.Add(BossSelectionEnum.Elite_Crescent_Sharks, new BossContainerData("AbrassarDungeonsBosses", new Vector3(605.782f, 1.0346f, 35.6858f), new Vector3(0f, 206f, 0f), new List<string>()));
@@ -52,7 +52,7 @@ namespace BossRush
         {
             /*
              * Purpose:
-             * Creates the chest based using the dictionary key and value.
+             * Creates a chest using the dictionary key and value using the SL_ItemContainerSpawn class from sideloaderw. This creates a chest object in a particular scene which has persistent content and can take custom droptableUIDs.
              */
             new SL_ItemContainerSpawn()
             {
@@ -73,7 +73,7 @@ namespace BossRush
         {
             /*
              * Purpose:
-             * Applies all the dictionary keys and values to create chests. Is only run once.            
+             * Applies all the chests.            
              */
             if (!applied) 
             {                
@@ -89,7 +89,7 @@ namespace BossRush
         {
             /*
              * Purpose:
-             * Adds a droptableUID to the target boss. This is the method for appending more droptables to the chests using DropTableUID (identifier string of a BossRushDropTable).
+             * Adds a droptableUID to the target boss. This is the method used for appending more droptables to the chests.
              */
             BossRushPlugin.Log.LogMessage($"Testing AddDropTable");
             if (chestDictionary != null) 
